@@ -34,11 +34,17 @@ module.exports = async function handler(req, res) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
   try {
-    const { sessionId, email } = req.body;
+    let { sessionId, email } = req.body;
 
     // Mode 1: Verify a Stripe Checkout session (success page)
     if (sessionId) {
       const session = await stripe.checkout.sessions.retrieve(sessionId);
+
+      // Check session expiry (sessions valid for 24 hours)
+      const sessionAge = (Date.now() - new Date(session.created * 1000).getTime()) / 1000 / 3600;
+      if (sessionAge > 24) {
+        return res.status(200).json({ verified: false, plan: 'free', error: 'Session expired' });
+      }
 
       if (session.payment_status === 'paid') {
         const customerEmail = session.customer_email || session.customer_details?.email;
@@ -54,6 +60,9 @@ module.exports = async function handler(req, res) {
 
     // Mode 2: Look up a subscriber by email (sign-in)
     if (email) {
+      // Normalize email
+      email = email.trim().toLowerCase();
+
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
         return res.status(400).json({ error: 'Valid email required' });

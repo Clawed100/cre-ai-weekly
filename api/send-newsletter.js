@@ -71,6 +71,9 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+// Track ongoing sends to prevent duplicates
+const ongoingSends = new Map();
+
 module.exports = async function handler(req, res) {
   const siteUrl = process.env.SITE_URL || '';
   const origin = req.headers.origin || '';
@@ -92,6 +95,18 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'Subject and content are required' });
   }
 
+  // Content length validation (50KB limit)
+  const MAX_CONTENT_LENGTH = 50000;
+  if (content.length > MAX_CONTENT_LENGTH) {
+    return res.status(400).json({ error: `Content exceeds maximum length of ${MAX_CONTENT_LENGTH} characters` });
+  }
+
+  // Basic HTML sanitization awareness (prevent obvious XSS)
+  const hasDangerousTags = /<script|<iframe|javascript:|on\w+\s*=|eval\(/i.test(content);
+  if (hasDangerousTags) {
+    return res.status(400).json({ error: 'Content contains potentially unsafe HTML' });
+  }
+
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
   const resend = new Resend(process.env.RESEND_API_KEY);
   const nlSiteUrl = siteUrl || 'https://yourdomain.com';
@@ -99,10 +114,27 @@ module.exports = async function handler(req, res) {
   const mailingAddress = process.env.MAILING_ADDRESS || 'CRE + AI Weekly';
 
   try {
+    // Prevent duplicate sends (idempotency check)
+    const sendKey = `${subject}-${audience}-${Date.now() / 60000 | 0}`; // Changes every minute
+    if (ongoingSends.has(sendKey)) {
+      return res.status(409).json({ error: 'A send is already in progress with these parameters' });
+    }
+    ongoingSends.set(sendKey, true);
+
+    // Clean up old send keys periodically
+    const now = Date.now() / 60000 | 0;
+    for (const [key] of ongoingSends.entries()) {
+      const keyTime = parseInt(key.split('-')[2]);
+      if (now - keyTime > 60) {
+        ongoingSends.delete(key);
+      }
+    }
+
     // Pull all subscribers from Stripe
     const subscribers = [];
     let hasMore = true;
     let startingAfter = undefined;
+    let batchErrors = [];
 
     while (hasMore) {
       const params = { limit: 100 };
@@ -165,6 +197,7 @@ module.exports = async function handler(req, res) {
         sent += batch.length;
       } catch (err) {
         console.error(`Batch ${i / BATCH_SIZE + 1} failed:`, err.message);
+        batchErrors.push(`Batch ${i / BATCH_SIZE + 1}: ${err.message}`);
         failed += batch.length;
       }
 
@@ -174,9 +207,17 @@ module.exports = async function handler(req, res) {
       }
     }
 
-    return res.status(200).json({ sent, failed, total: subscribers.length });
+    ongoingSends.delete(sendKey);
+    return res.status(200).json({
+      sent,
+      failed,
+      total: subscribers.length,
+      ...(batchErrors.length > 0 && { batchErrors })
+    });
   } catch (err) {
     console.error('Send newsletter error:', err.message);
+    const sendKey = `${req.body.subject}-${req.body.audience}-${Date.now() / 60000 | 0}`;
+    ongoingSends.delete(sendKey);
     return res.status(500).json({ error: 'Failed to send newsletter' });
   }
 };

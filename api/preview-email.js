@@ -66,6 +66,18 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'Subject and content are required' });
   }
 
+  // Content length validation
+  const MAX_CONTENT_LENGTH = 50000;
+  if (content.length > MAX_CONTENT_LENGTH) {
+    return res.status(400).json({ error: `Content exceeds maximum length of ${MAX_CONTENT_LENGTH} characters` });
+  }
+
+  // Basic HTML sanitization for XSS prevention in preview
+  const hasDangerousTags = /<script|<iframe|javascript:|on\w+\s*=|eval\(/i.test(content);
+  if (hasDangerousTags) {
+    return res.status(400).json({ error: 'Content contains potentially unsafe HTML' });
+  }
+
   const previewSiteUrl = process.env.SITE_URL || 'https://yourdomain.com';
   const demoEmail = 'subscriber@example.com';
   const token = crypto.createHmac('sha256', process.env.ADMIN_PASSWORD).update(demoEmail).digest('hex');

@@ -33,6 +33,24 @@ module.exports = async function handler(req, res) {
   }
 
   try {
+    // Log event for debugging
+    console.log(`Processing webhook event: ${event.type} (ID: ${event.id})`);
+
+    // Check if event was already processed (idempotency)
+    const processedEvents = global.processedWebhookEvents || {};
+    if (processedEvents[event.id]) {
+      console.log(`Event ${event.id} already processed, skipping`);
+      return res.status(200).json({ received: true });
+    }
+    processedEvents[event.id] = true;
+    global.processedWebhookEvents = processedEvents;
+
+    // Auto-cleanup old processed events (keep last 1000)
+    if (Object.keys(processedEvents).length > 1000) {
+      const keys = Object.keys(processedEvents);
+      keys.slice(0, keys.length - 1000).forEach(k => delete processedEvents[k]);
+    }
+
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object;
@@ -89,8 +107,17 @@ module.exports = async function handler(req, res) {
         break;
       }
 
+      case 'invoice.payment_failed': {
+        const invoice = event.data.object;
+        const customerId = invoice.customer;
+        console.log(`Payment failed for customer ${customerId}`);
+        // Could send email notification here
+        break;
+      }
+
       default:
         // Unhandled event type — that's fine
+        console.log(`Unhandled event type: ${event.type}`);
         break;
     }
 

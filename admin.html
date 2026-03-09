@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
 <title>Admin // CRE + AI Weekly</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -192,6 +193,18 @@
     resize: vertical;
     line-height: 1.6;
   }
+  .field .char-count {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .field .char-count.warning {
+    color: var(--yellow);
+  }
+  .field .char-count.error {
+    color: var(--red);
+  }
   .field input:focus, .field select:focus, .field textarea:focus {
     outline: none;
     border-color: var(--green);
@@ -373,12 +386,14 @@
 <p>Here's what happened...</p>
 
 <h3>1. AI-Powered Lease Analysis</h3>
-<p>New tools can now read 200-page leases in 30 seconds...</p>"></textarea>
+<p>New tools can now read 200-page leases in 30 seconds...</p>" onkeyup="updateCharCount(this)"></textarea>
+      <div class="char-count"><span id="char-count">0</span> characters</div>
     </div>
 
     <div class="actions">
       <button class="btn btn-outline" onclick="handlePreview()">Preview Email</button>
-      <button class="btn btn-green" id="send-btn" onclick="showConfirm()">Send Newsletter</button>
+      <button class="btn btn-green" id="send-btn" onclick="showConfirm()" title="Ctrl+Enter to send">Send Newsletter</button>
+      <button class="btn btn-outline" onclick="exportSubscribersCSV()">Export Subscribers (CSV)</button>
     </div>
 
     <div class="preview-frame" id="preview-frame">
@@ -403,6 +418,88 @@
 
 <script>
   let authToken = '';
+  let inactivityTimeout;
+  const INACTIVITY_TIME = 15 * 60 * 1000; // 15 minutes
+  const MAX_CONTENT_LENGTH = 50000; // 50KB limit
+  let lastSave = {};
+
+  // Auto-logout after inactivity
+  function resetInactivityTimer() {
+    clearTimeout(inactivityTimeout);
+    inactivityTimeout = setTimeout(() => {
+      if (document.getElementById('dashboard').classList.contains('active')) {
+        handleLogout();
+        alert('Session expired due to inactivity. Please log in again.');
+      }
+    }, INACTIVITY_TIME);
+  }
+
+  document.addEventListener('mousemove', resetInactivityTimer);
+  document.addEventListener('keydown', resetInactivityTimer);
+  document.addEventListener('click', resetInactivityTimer);
+
+  // Character count
+  function updateCharCount(el) {
+    const count = el.value.length;
+    const countEl = document.getElementById('char-count');
+    countEl.textContent = count;
+
+    const display = countEl.parentElement;
+    if (count > MAX_CONTENT_LENGTH * 0.9) {
+      display.classList.add('warning');
+    } else {
+      display.classList.remove('warning');
+    }
+    if (count > MAX_CONTENT_LENGTH) {
+      display.classList.add('error');
+    } else {
+      display.classList.remove('error');
+    }
+  }
+
+  // Autosave drafts to localStorage
+  function autosaveDraft() {
+    const subject = document.getElementById('email-subject').value;
+    const content = document.getElementById('email-content').value;
+    const audience = document.getElementById('email-audience').value;
+
+    if (subject || content) {
+      lastSave = { subject, content, audience, savedAt: new Date().toLocaleTimeString() };
+      localStorage.setItem('newsletter-draft', JSON.stringify(lastSave));
+    }
+  }
+
+  // Load draft on login
+  function loadDraft() {
+    const draft = localStorage.getItem('newsletter-draft');
+    if (draft) {
+      try {
+        const data = JSON.parse(draft);
+        document.getElementById('email-subject').value = data.subject || '';
+        document.getElementById('email-content').value = data.content || '';
+        document.getElementById('email-audience').value = data.audience || 'all';
+        updateCharCount(document.getElementById('email-content'));
+      } catch (e) {}
+    }
+  }
+
+  // Autosave every 30 seconds
+  setInterval(() => {
+    if (document.getElementById('dashboard').classList.contains('active')) {
+      autosaveDraft();
+    }
+  }, 30000);
+
+  // Warn before navigating away with unsaved changes
+  window.addEventListener('beforeunload', (e) => {
+    const subject = document.getElementById('email-subject')?.value || '';
+    const content = document.getElementById('email-content')?.value || '';
+    if ((subject || content) && JSON.stringify(lastSave) !== JSON.stringify({ subject, content })) {
+      e.preventDefault();
+      e.returnValue = 'You have unsaved changes. Are you sure?';
+      return 'You have unsaved changes. Are you sure?';
+    }
+  });
 
   // Login
   document.getElementById('password-input').addEventListener('keydown', (e) => {
@@ -430,6 +527,9 @@
       document.getElementById('login-screen').style.display = 'none';
       document.getElementById('dashboard').classList.add('active');
       updateStats(data);
+      loadDraft();
+      resetInactivityTimer();
+      refreshStats(); // Refresh automatically
     } catch (err) {
       document.getElementById('login-error').textContent = 'Connection error';
       document.getElementById('login-error').style.display = 'block';
@@ -523,6 +623,13 @@
     const status = document.getElementById('send-status');
     const btn = document.getElementById('send-btn');
 
+    if (content.length > MAX_CONTENT_LENGTH) {
+      status.className = 'send-status error';
+      status.textContent = `error: Content exceeds maximum length of ${MAX_CONTENT_LENGTH} characters`;
+      status.style.display = 'block';
+      return;
+    }
+
     btn.disabled = true;
     btn.textContent = 'Sending...';
     status.className = 'send-status loading';
@@ -546,6 +653,13 @@
       status.className = 'send-status success';
       status.textContent = `sent: ${data.sent} | failed: ${data.failed} | total: ${data.total}`;
 
+      // Clear draft after successful send
+      localStorage.removeItem('newsletter-draft');
+      lastSave = {};
+      document.getElementById('email-subject').value = '';
+      document.getElementById('email-content').value = '';
+      updateCharCount(document.getElementById('email-content'));
+
       refreshStats();
     } catch (err) {
       status.className = 'send-status error';
@@ -555,6 +669,64 @@
       btn.textContent = 'Send Newsletter';
     }
   }
+
+  // Export subscribers as CSV
+  async function exportSubscribersCSV() {
+    const btn = event.target;
+    btn.disabled = true;
+    btn.textContent = 'Exporting...';
+
+    try {
+      const res = await fetch('/api/subscribers', {
+        headers: { Authorization: `Bearer ${authToken}` },
+      });
+      const data = await res.json();
+
+      // Create CSV content
+      const csvHeader = 'Count,Metric\n';
+      const csvData = [
+        `${data.active || 0},Active Subscribers`,
+        `${data.free || 0},Free Plan`,
+        `${data.pro || 0},Pro Plan`,
+        `${data.unsubscribed || 0},Unsubscribed`,
+        `${data.total || 0},Total`,
+      ].join('\n');
+
+      const csv = csvHeader + csvData;
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `subscribers-${new Date().toISOString().split('T')[0]}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      alert('Failed to export: ' + err.message);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Export Subscribers (CSV)';
+    }
+  }
+
+  // Keyboard shortcut: Ctrl+Enter to send
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      const subject = document.getElementById('email-subject')?.value;
+      const content = document.getElementById('email-content')?.value;
+      if (subject && content && document.getElementById('dashboard').classList.contains('active')) {
+        showConfirm();
+      }
+    }
+  });
+
+  // Stats auto-refresh every 60 seconds
+  setInterval(() => {
+    if (authToken && document.getElementById('dashboard').classList.contains('active')) {
+      refreshStats();
+    }
+  }, 60000);
 </script>
 </body>
 </html>

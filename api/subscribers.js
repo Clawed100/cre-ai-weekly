@@ -1,6 +1,12 @@
 const Stripe = require('stripe');
 const crypto = require('crypto');
 
+// Cache stats (valid for 60 seconds)
+const statsCache = {
+  data: null,
+  expiry: 0,
+};
+
 function verifyAdmin(req) {
   const auth = req.headers.authorization || '';
   const token = auth.replace('Bearer ', '');
@@ -26,6 +32,14 @@ module.exports = async function handler(req, res) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
   try {
+    // Check cache first (valid for 60 seconds)
+    const now = Date.now();
+    if (statsCache.data && now < statsCache.expiry) {
+      res.setHeader('X-Cache', 'hit');
+      res.setHeader('X-Last-Updated', new Date(statsCache.timestamp).toISOString());
+      return res.status(200).json(statsCache.data);
+    }
+
     let total = 0;
     let free = 0;
     let pro = 0;
@@ -59,7 +73,16 @@ module.exports = async function handler(req, res) {
       }
     }
 
-    return res.status(200).json({ total, free, pro, unsubscribed, active: free + pro });
+    const result = { total, free, pro, unsubscribed, active: free + pro };
+
+    // Cache the result
+    statsCache.data = result;
+    statsCache.expiry = now + 60 * 1000; // 60 second cache
+    statsCache.timestamp = now;
+
+    res.setHeader('X-Cache', 'miss');
+    res.setHeader('X-Last-Updated', new Date(now).toISOString());
+    return res.status(200).json(result);
   } catch (err) {
     console.error('Subscribers error:', err.message);
     return res.status(500).json({ error: 'Failed to fetch subscribers' });

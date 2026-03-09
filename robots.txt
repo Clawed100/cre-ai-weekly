@@ -2,5 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /admin.html
 Disallow: /api/
+Disallow: /success.html
+Disallow: /unsubscribe.html
 
-Sitemap: https://yourdomain.com/sitemap.xml
+Sitemap: /sitemap.xml

@@ -42,13 +42,22 @@ module.exports = async function handler(req, res) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
   try {
-    const { email } = req.body;
+    let { email } = req.body;
+
+    // Input sanitization: trim and normalize
+    if (!email || typeof email !== 'string') {
+      return res.status(400).json({ error: 'Valid email required' });
+    }
+    email = email.trim().toLowerCase();
 
     // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email || !emailRegex.test(email) || email.length > 254) {
+    if (!emailRegex.test(email) || email.length > 254) {
       return res.status(400).json({ error: 'Valid email required' });
     }
+
+    // Add response time monitoring header
+    const startTime = Date.now();
 
     // Check if customer already exists with this source
     const existing = await stripe.customers.list({ email, limit: 1 });
@@ -118,9 +127,19 @@ module.exports = async function handler(req, res) {
       }).catch(err => console.error('Welcome email failed:', err.message));
     }
 
+    res.setHeader('X-Response-Time', `${Date.now() - startTime}ms`);
     return res.status(200).json({ success: true });
   } catch (err) {
     console.error('Subscribe error:', err.message);
     return res.status(500).json({ error: 'Something went wrong' });
+  } finally {
+    // Cleanup: prevent memory leaks in rate limit map
+    // Remove old entries older than 10 minutes
+    const now = Date.now();
+    for (const [ip, entry] of rateLimit.entries()) {
+      if (now - entry.start > 10 * 60 * 1000) {
+        rateLimit.delete(ip);
+      }
+    }
   }
 };

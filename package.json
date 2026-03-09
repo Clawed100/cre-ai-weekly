@@ -1,7 +1,25 @@
 {
   "name": "cre-ai-weekly",
   "version": "1.0.0",
+  "description": "CRE + AI Weekly newsletter platform with Stripe payments and Resend email service",
   "private": true,
+  "author": "Jeff",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "node -e \"require('http').createServer((req, res) => require('./api/subscribe.js')(req, res)).listen(3000, () => console.log('Dev server running on http://localhost:3000'))\"",
+    "lint": "echo 'Add eslint configuration to use this script'",
+    "test": "echo 'Add test configuration to use this script'"
+  },
+  "keywords": [
+    "newsletter",
+    "stripe",
+    "email",
+    "cre",
+    "real-estate",
+    "ai"
+  ],
   "dependencies": {
     "micro": "^10.0.1",
     "resend": "^4.0.0",

@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
 <title>Unsubscribed // CRE + AI Weekly</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -58,6 +59,35 @@
     color: #e4e4e7;
   }
   .btn-outline:hover { border-color: #71717a; }
+  .btn-green {
+    background: #22c55e;
+    color: #000;
+  }
+  .btn-green:hover { background: #16a34a; }
+  .feedback-section {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid #1e1e22;
+    display: none;
+  }
+  .feedback-section.show { display: block; }
+  .feedback-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .feedback-option {
+    padding: 10px 12px;
+    border: 1px solid #1e1e22;
+    border-radius: 6px;
+    background: #111113;
+    color: #e4e4e7;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+  }
+  .feedback-option:hover { border-color: #71717a; }
 </style>
 </head>
 <body>
@@ -66,7 +96,54 @@
   <h1>// unsubscribed</h1>
   <p>You've been removed from CRE + AI Weekly. You won't receive any more emails from us.</p>
   <p style="font-size:13px;">Changed your mind? You can always re-subscribe from our homepage.</p>
-  <a href="/" class="btn btn-outline">Back to CRE + AI Weekly</a>
+
+  <div class="feedback-section" id="feedback-section">
+    <p style="font-size:13px;color:#a1a1aa;margin-bottom:12px;">Why did you unsubscribe? (optional)</p>
+    <div class="feedback-options">
+      <button class="feedback-option" onclick="sendFeedback('too_frequent')">Emails too frequent</button>
+      <button class="feedback-option" onclick="sendFeedback('not_relevant')">Not relevant to me</button>
+      <button class="feedback-option" onclick="sendFeedback('low_quality')">Low quality content</button>
+      <button class="feedback-option" onclick="sendFeedback('other')">Other</button>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:12px;margin-top:24px;">
+    <a href="/" class="btn btn-outline" style="flex:1;">Back Home</a>
+    <button class="btn btn-green" style="flex:1;" onclick="toggleFeedback()">Help Us Improve</button>
+  </div>
+
+  <div id="resubscribe-prompt" style="display:none;margin-top:24px;padding:16px;background:#111113;border-radius:8px;text-align:center;">
+    <p style="margin-bottom:12px;">Miss us already?</p>
+    <a href="/#subscribe" class="btn btn-green" style="width:100%;">Re-subscribe</a>
+  </div>
 </div>
+
+<script>
+  const feedbackSection = document.getElementById('feedback-section');
+  let feedbackSent = false;
+
+  function toggleFeedback() {
+    feedbackSection.classList.toggle('show');
+    if (!feedbackSection.classList.contains('show')) {
+      document.getElementById('resubscribe-prompt').style.display = 'block';
+    }
+  }
+
+  function sendFeedback(reason) {
+    if (feedbackSent) return;
+    feedbackSent = true;
+
+    const email = new URLSearchParams(window.location.search).get('email') || 'unknown';
+
+    // Log feedback (in a real app, send to backend)
+    console.log('Feedback:', { email, reason });
+
+    feedbackSection.innerHTML = '<p style="color:#22c55e;">Thank you for your feedback. We\'ll use it to improve.</p>';
+
+    setTimeout(() => {
+      document.getElementById('resubscribe-prompt').style.display = 'block';
+    }, 1500);
+  }
+</script>
 </body>
 </html>

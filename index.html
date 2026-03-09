@@ -6,15 +6,25 @@
   <title>CRE + AI Weekly &mdash; AI Insights for Commercial Real Estate Pros</title>
   <meta name="description" content="Weekly newsletter covering how AI is changing commercial real estate. Real tools, real numbers, no hype. Trusted by 4,200+ CRE professionals.">
   <meta name="author" content="Jeff">
-  <link rel="canonical" href="https://yourdomain.com/">
+  <link rel="canonical" href="/">
+
+  <!-- Security & Metadata -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" content="#0a0a0b">
+  <meta name="color-scheme" content="light dark">
+
+  <!-- Content Security Policy -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.stripe.com; frame-src https://js.stripe.com https://stripe.com; object-src 'none'; base-uri 'self'; form-action 'self';">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="CRE + AI Weekly — AI Insights for Commercial Real Estate">
   <meta property="og:description" content="Weekly newsletter covering how AI is changing commercial real estate. Real tools, real numbers, no hype.">
-  <meta property="og:url" content="https://yourdomain.com/">
+  <meta property="og:url" content="/">
   <meta property="og:site_name" content="CRE + AI Weekly">
-  <meta property="og:image" content="https://yourdomain.com/og-image.png">
+  <meta property="og:image" content="/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
 
@@ -22,10 +32,37 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="CRE + AI Weekly — AI Insights for Commercial Real Estate">
   <meta name="twitter:description" content="Weekly newsletter covering how AI is changing commercial real estate. Real tools, real numbers, no hype.">
-  <meta name="twitter:image" content="https://yourdomain.com/og-image.png">
+  <meta name="twitter:image" content="/og-image.png">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NewsletterIssue",
+    "name": "CRE + AI Weekly",
+    "description": "Weekly newsletter covering how AI is changing commercial real estate",
+    "publisher": {
+      "@type": "Organization",
+      "name": "CRE + AI Weekly",
+      "url": "/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "/og-image.png"
+      }
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Jeff"
+    }
+  }
+  </script>
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%230a0a0b'/><text x='50' y='62' font-family='monospace' font-size='36' font-weight='bold' fill='%2322c55e' text-anchor='middle'>CRE</text></svg>">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <!-- Font Preload & Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" as="style">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -70,6 +107,56 @@
     }
 
     ::selection { background: var(--green); color: #000; }
+
+    /* Skip to content link */
+    .skip-to-content {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--green);
+      color: #000;
+      padding: 8px 16px;
+      text-decoration: none;
+      z-index: 200;
+      border-radius: 0 0 4px 0;
+      font-weight: 600;
+    }
+    .skip-to-content:focus {
+      top: 0;
+    }
+
+    /* Accessibility: focus-visible for keyboard navigation */
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    select:focus-visible {
+      outline: 2px solid var(--green);
+      outline-offset: 2px;
+    }
+
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* Dark mode support */
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #fafaf9;
+        --bg-1: #f5f5f4;
+        --bg-2: #f0ede9;
+        --text: #18181b;
+        --text-2: #52525b;
+        --text-3: #71717a;
+        --border: #e7e5e4;
+      }
+    }
 
     /* ── NAV ── */
     .nav {
@@ -124,6 +211,37 @@
     }
     .btn-yellow:hover { background: #ca8a04; }
     .btn-lg { padding: 12px 24px; font-size: .9rem; }
+
+    /* Touch target minimum size (44px) */
+    @media (hover: none) and (pointer: coarse) {
+      .btn {
+        min-height: 44px;
+        min-width: 44px;
+      }
+      input, textarea, select {
+        min-height: 44px;
+      }
+    }
+
+    /* Print styles */
+    @media print {
+      .nav, .paywall, .modal, .cta-form, .nav-actions, button {
+        display: none !important;
+      }
+      body {
+        background: #fff;
+        color: #000;
+      }
+      a {
+        text-decoration: underline;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        page-break-after: avoid;
+      }
+      img {
+        max-width: 100%;
+      }
+    }
 
     /* ── HERO ── */
     .hero {
@@ -660,16 +778,19 @@
 </head>
 <body>
 
+<!-- Skip to main content link for accessibility -->
+<a href="#main-content" class="skip-to-content">Skip to main content</a>
+
 <!-- NAV -->
-<nav class="nav" id="nav">
+<nav class="nav" id="nav" aria-label="Primary navigation">
   <div class="nav-inner">
-    <a href="#" class="nav-brand">
+    <a href="/" class="nav-brand" aria-label="CRE + AI Weekly Home">
       <div class="nav-icon">CRE</div>
       <span class="nav-title">CRE + AI Weekly</span>
     </a>
     <div class="nav-actions" id="nav-actions">
-      <button class="btn btn-ghost" onclick="openModal('signin')">Sign in</button>
-      <button class="btn btn-green" onclick="openModal('free')">Subscribe</button>
+      <button class="btn btn-ghost" onclick="openModal('signin')" aria-label="Sign in to your account">Sign in</button>
+      <button class="btn btn-green" onclick="openModal('free')" aria-label="Subscribe to the free newsletter">Subscribe</button>
     </div>
   </div>
 </nav>
@@ -707,6 +828,7 @@
 </section>
 
 <!-- ARTICLE -->
+<main id="main-content">
 <article class="article" id="article">
   <div class="wrap">
     <div class="article-meta">
@@ -849,6 +971,7 @@
     </ul>
   </div>
 </article>
+</main>
 
 <!-- PAYWALL -->
 <div class="wrap">
@@ -993,10 +1116,11 @@
 <section class="cta-banner">
   <h2>Don't miss the next issue</h2>
   <p>Actionable AI insights for CRE. No fluff. No jargon.</p>
-  <div class="cta-form">
-    <input type="email" id="banner-email" placeholder="your@email.com" />
-    <button class="btn btn-green" onclick="subscribeBanner()">Subscribe</button>
-  </div>
+  <form class="cta-form" onsubmit="event.preventDefault(); subscribeBanner();">
+    <label for="banner-email" style="display:none;">Email address</label>
+    <input type="email" id="banner-email" placeholder="your@email.com" required autocomplete="email" />
+    <button class="btn btn-green" type="submit" aria-label="Subscribe to newsletter">Subscribe</button>
+  </form>
   <p id="banner-success" style="display:none;">You're in. Check your inbox.</p>
 </section>
 
@@ -1056,11 +1180,12 @@
         <button class="modal-close" onclick="closeModal()">&times;</button>
         <h3>Subscribe free</h3>
         <p>Weekly CRE + AI insights. No spam.</p>
-        <div id="modal-form">
-          <input type="email" id="modal-email" placeholder="your@email.com" />
-          <button class="btn btn-green" onclick="handleSubscribe('free')">Subscribe</button>
+        <form id="modal-form" onsubmit="event.preventDefault(); handleSubscribe('free');">
+          <label for="modal-email" style="display:none;">Email address</label>
+          <input type="email" id="modal-email" placeholder="your@email.com" required autocomplete="email" />
+          <button class="btn btn-green" type="submit">Subscribe</button>
           <span class="switch-link">Want the full playbook? <a onclick="openModal('pro')">Go Pro</a></span>
-        </div>
+        </form>
         <div class="success-msg" id="modal-success">
           <div class="success-check">&#10003;</div>
           <h3>You're in.</h3>
@@ -1072,11 +1197,12 @@
         <div style="font-family:var(--mono);font-size:.6rem;font-weight:700;background:var(--yellow);color:#000;display:inline-block;padding:2px 10px;border-radius:4px;margin-bottom:12px;text-transform:uppercase;letter-spacing:.04em;">pro</div>
         <h3>Go Pro &mdash; $12/mo</h3>
         <p>Full playbooks, tools, case studies &amp; Q&amp;A.</p>
-        <div id="modal-form">
-          <input type="email" id="modal-email" placeholder="your@email.com" />
-          <button class="btn btn-yellow" onclick="handleSubscribe('pro')">Start Pro</button>
+        <form id="modal-form" onsubmit="event.preventDefault(); handleSubscribe('pro');">
+          <label for="modal-email" style="display:none;">Email address</label>
+          <input type="email" id="modal-email" placeholder="your@email.com" required autocomplete="email" />
+          <button class="btn btn-yellow" type="submit">Start Pro</button>
           <span class="switch-link">Just want free? <a onclick="openModal('free')">Subscribe free</a></span>
-        </div>
+        </form>
         <div class="success-msg" id="modal-success">
           <div class="success-check">&#10003;</div>
           <h3>Welcome to Pro.</h3>
@@ -1087,11 +1213,12 @@
         <button class="modal-close" onclick="closeModal()">&times;</button>
         <h3>Welcome back</h3>
         <p>Enter your email to sign in.</p>
-        <div id="modal-form">
-          <input type="email" id="modal-email" placeholder="your@email.com" />
-          <button class="btn btn-green" onclick="handleSignin()">Sign in</button>
+        <form id="modal-form" onsubmit="event.preventDefault(); handleSignin();">
+          <label for="modal-email" style="display:none;">Email address</label>
+          <input type="email" id="modal-email" placeholder="your@email.com" required autocomplete="email" />
+          <button class="btn btn-green" type="submit">Sign in</button>
           <span class="switch-link">New here? <a onclick="openModal('free')">Subscribe free</a></span>
-        </div>
+        </form>
         <div class="success-msg" id="modal-success">
           <div class="success-check">&#10003;</div>
           <h3>Welcome back.</h3>

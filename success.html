@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
   <title>Welcome to Pro &mdash; CRE + AI Weekly</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
   <style>
@@ -142,11 +143,22 @@
 </div>
 
 <script>
+  // Show loading state
+  const card = document.querySelector('.card');
+  const originalContent = card.innerHTML;
+  let isVerified = false;
+
   // Verify the Stripe checkout session server-side before granting Pro
   const params = new URLSearchParams(window.location.search);
   const sessionId = params.get('session_id');
 
   if (sessionId) {
+    // Show loading spinner while verifying
+    const spinner = document.createElement('div');
+    spinner.style.cssText = 'text-align:center;margin:20px 0;';
+    spinner.innerHTML = '<p style="color:#52525b;">Verifying your subscription...</p>';
+    card.innerHTML = spinner.innerHTML;
+
     fetch('/api/verify-session', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -157,31 +169,80 @@
         if (data.verified && data.plan === 'pro') {
           localStorage.setItem('subscribed', 'pro');
           if (data.email) localStorage.setItem('userEmail', data.email);
+          isVerified = true;
+          card.innerHTML = originalContent;
+          launchConfetti();
+        } else {
+          // Verification failed
+          card.innerHTML = `
+            <div class="icon-wrap" style="background: linear-gradient(135deg, #fee2e2, #fecaca);">
+              <svg fill="none" viewBox="0 0 24 24" stroke="#dc2626" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </div>
+            <h1 style="color:#dc2626;">Verification Failed</h1>
+            <p>We couldn't verify your subscription. Please contact support.</p>
+            <a href="/" class="btn btn-primary" style="background:#0c4a3e;">Return Home</a>
+          `;
         }
       })
-      .catch(err => console.error('Verification error:', err));
+      .catch(err => {
+        console.error('Verification error:', err);
+        card.innerHTML = `
+          <div class="icon-wrap" style="background: linear-gradient(135deg, #fee2e2, #fecaca);">
+            <svg fill="none" viewBox="0 0 24 24" stroke="#dc2626" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </div>
+          <h1 style="color:#dc2626;">Connection Error</h1>
+          <p>Please check your connection and try again.</p>
+          <a href="/" class="btn btn-primary" style="background:#0c4a3e;">Return Home</a>
+        `;
+      });
   } else {
-    // No session ID — don't grant Pro
-    // (Prevents someone from visiting /success.html directly to get Pro)
+    // No session ID — don't grant Pro (prevents someone from visiting /success.html directly to get Pro)
+    card.innerHTML = `
+      <div class="icon-wrap" style="background: linear-gradient(135deg, #fee2e2, #fecaca);">
+        <svg fill="none" viewBox="0 0 24 24" stroke="#dc2626" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </div>
+      <h1 style="color:#dc2626;">Invalid Access</h1>
+      <p>This page is only accessible after a successful checkout.</p>
+      <a href="/" class="btn btn-primary" style="background:#0c4a3e;">Return Home</a>
+    `;
   }
 
   // Confetti animation
   function launchConfetti() {
     const container = document.getElementById('confetti');
     const colors = ['#0c4a3e', '#059669', '#34d399', '#b8860b', '#d4a017', '#fbbf24', '#a78bfa'];
+    const pieces = [];
     for (let i = 0; i < 60; i++) {
       const piece = document.createElement('div');
       piece.classList.add('confetti-piece');
       piece.style.left = Math.random() * 100 + '%';
       piece.style.background = colors[Math.floor(Math.random() * colors.length)];
       piece.style.animationDelay = Math.random() * 1.5 + 's';
-      piece.style.animationDuration = (2 + Math.random() * 2) + 's';
+      const duration = 2 + Math.random() * 2;
+      piece.style.animationDuration = duration + 's';
       piece.style.width = (6 + Math.random() * 8) + 'px';
       piece.style.height = (6 + Math.random() * 8) + 'px';
       container.appendChild(piece);
+      pieces.push({ piece, duration });
     }
+
+    // Clean up confetti after animation completes
+    setTimeout(() => {
+      pieces.forEach(({ piece }) => piece.remove());
+    }, 5000);
   }
-  launchConfetti();
+
+  // Only launch confetti if verification succeeded
+  if (isVerified || sessionId) {
+    // Wait a bit before starting confetti
+    setTimeout(launchConfetti, 500);
+  }
 </script>
 
 </body>

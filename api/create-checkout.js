@@ -40,11 +40,23 @@ module.exports = async function handler(req, res) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
   try {
-    const { email } = req.body;
+    let { email } = req.body;
+
+    // Input sanitization
+    if (!email || typeof email !== 'string') {
+      return res.status(400).json({ error: 'Valid email required' });
+    }
+    email = email.trim().toLowerCase();
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email || !emailRegex.test(email) || email.length > 254) {
+    if (!emailRegex.test(email) || email.length > 254) {
       return res.status(400).json({ error: 'Valid email required' });
+    }
+
+    // Validate STRIPE_PRICE_ID is configured
+    if (!process.env.STRIPE_PRICE_ID) {
+      console.error('STRIPE_PRICE_ID not configured');
+      return res.status(500).json({ error: 'Checkout not available' });
     }
 
     // Determine base URL from request headers
@@ -52,24 +64,31 @@ module.exports = async function handler(req, res) {
     const host = req.headers['x-forwarded-host'] || req.headers.host;
     const baseUrl = `${protocol}://${host}`;
 
-    // Create Stripe Checkout Session for Pro subscription
-    const session = await stripe.checkout.sessions.create({
-      mode: 'subscription',
-      payment_method_types: ['card'],
-      customer_email: email,
-      line_items: [
-        {
-          price: process.env.STRIPE_PRICE_ID,
-          quantity: 1,
+    // Create Stripe Checkout Session for Pro subscription with idempotency
+    const idempotencyKey = `${email}-${Math.floor(Date.now() / 60000)}`; // Changes every minute
+    const session = await stripe.checkout.sessions.create(
+      {
+        mode: 'subscription',
+        payment_method_types: ['card'],
+        customer_email: email,
+        line_items: [
+          {
+            price: process.env.STRIPE_PRICE_ID,
+            quantity: 1,
+          },
+        ],
+        success_url: `${baseUrl}/success.html?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${baseUrl}/#pricing`,
+        metadata: {
+          plan: 'pro',
+          source: 'cre-ai-weekly',
+          created_at: new Date().toISOString(),
         },
-      ],
-      success_url: `${baseUrl}/success.html?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${baseUrl}/#pricing`,
-      metadata: {
-        plan: 'pro',
-        source: 'cre-ai-weekly',
       },
-    });
+      {
+        idempotencyKey,
+      }
+    );
 
     return res.status(200).json({
       url: session.url,
