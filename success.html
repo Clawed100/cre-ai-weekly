@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to Pro &mdash; CRE + AI Weekly</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', -apple-system, sans-serif;
+      background: #fafaf9;
+      color: #18181b;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .card {
+      background: #fff;
+      border-radius: 24px;
+      padding: 56px 40px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 12px 40px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.03);
+      animation: slideUp .5s cubic-bezier(.16,1,.3,1);
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .icon-wrap {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px;
+      animation: popIn .4s .2s cubic-bezier(.16,1,.3,1) both;
+    }
+    @keyframes popIn {
+      from { transform: scale(0); }
+      to { transform: scale(1); }
+    }
+    .icon-wrap svg {
+      width: 36px; height: 36px;
+    }
+    .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      color: #fff; padding: 4px 18px;
+      border-radius: 100px;
+      font-size: .72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .06em;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem; letter-spacing: -.02em;
+      margin-bottom: 12px;
+    }
+    p {
+      color: #52525b; font-size: .95rem;
+      line-height: 1.65; margin-bottom: 8px;
+    }
+    .features {
+      list-style: none; margin: 28px 0;
+      text-align: left; padding: 0;
+    }
+    .features li {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 0;
+      font-size: .9rem; color: #52525b;
+      border-bottom: 1px solid #f4f4f5;
+    }
+    .features li:last-child { border-bottom: none; }
+    .features .check {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: #dcfce7; color: #16a34a;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .7rem; font-weight: 700; flex-shrink: 0;
+    }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 8px;
+      width: 100%; padding: 16px 28px;
+      border-radius: 14px; border: none;
+      font-size: 1rem; font-weight: 600;
+      font-family: inherit; cursor: pointer;
+      text-decoration: none;
+      transition: all .25s cubic-bezier(.4,0,.2,1);
+    }
+    .btn-primary {
+      background: #0c4a3e; color: #fff;
+      box-shadow: 0 2px 8px rgba(12,74,62,.25);
+    }
+    .btn-primary:hover {
+      background: #0a3d33;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(12,74,62,.3);
+    }
+    .confetti {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none; z-index: 10;
+      overflow: hidden;
+    }
+    .confetti-piece {
+      position: absolute; width: 10px; height: 10px;
+      border-radius: 2px;
+      animation: confettiFall 3s ease-out forwards;
+    }
+    @keyframes confettiFall {
+      0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="confetti" id="confetti"></div>
+
+<div class="card">
+  <div class="icon-wrap">
+    <svg fill="none" viewBox="0 0 24 24" stroke="#059669" stroke-width="2.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+    </svg>
+  </div>
+  <div class="badge">Pro Member</div>
+  <h1>Welcome to Pro!</h1>
+  <p>Your subscription is active. You now have full access to everything.</p>
+  <ul class="features">
+    <li><span class="check">&#10003;</span> Full AI tool breakdowns for CRE</li>
+    <li><span class="check">&#10003;</span> Implementation checklists</li>
+    <li><span class="check">&#10003;</span> Deal case studies with real numbers</li>
+    <li><span class="check">&#10003;</span> Priority Q&amp;A with Jeff</li>
+    <li><span class="check">&#10003;</span> Early access to new guides</li>
+  </ul>
+  <a href="/" class="btn btn-primary">
+    Read the full guide &rarr;
+  </a>
+</div>
+
+<script>
+  // Verify the Stripe checkout session server-side before granting Pro
+  const params = new URLSearchParams(window.location.search);
+  const sessionId = params.get('session_id');
+
+  if (sessionId) {
+    fetch('/api/verify-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sessionId }),
+    })
+      .then(r => r.json())
+      .then(data => {
+        if (data.verified && data.plan === 'pro') {
+          localStorage.setItem('subscribed', 'pro');
+          if (data.email) localStorage.setItem('userEmail', data.email);
+        }
+      })
+      .catch(err => console.error('Verification error:', err));
+  } else {
+    // No session ID — don't grant Pro
+    // (Prevents someone from visiting /success.html directly to get Pro)
+  }
+
+  // Confetti animation
+  function launchConfetti() {
+    const container = document.getElementById('confetti');
+    const colors = ['#0c4a3e', '#059669', '#34d399', '#b8860b', '#d4a017', '#fbbf24', '#a78bfa'];
+    for (let i = 0; i < 60; i++) {
+      const piece = document.createElement('div');
+      piece.classList.add('confetti-piece');
+      piece.style.left = Math.random() * 100 + '%';
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.animationDelay = Math.random() * 1.5 + 's';
+      piece.style.animationDuration = (2 + Math.random() * 2) + 's';
+      piece.style.width = (6 + Math.random() * 8) + 'px';
+      piece.style.height = (6 + Math.random() * 8) + 'px';
+      container.appendChild(piece);
+    }
+  }
+  launchConfetti();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin // CRE + AI Weekly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0a0a0b;
+    --surface: #111113;
+    --border: #1e1e22;
+    --text: #e4e4e7;
+    --muted: #71717a;
+    --green: #22c55e;
+    --green-dim: rgba(34,197,94,0.15);
+    --red: #ef4444;
+    --blue: #3b82f6;
+    --yellow: #eab308;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    min-height: 100vh;
+  }
+  code, .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* Login */
+  .login-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .login-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+  }
+  .login-box h1 {
+    font-size: 20px;
+    color: var(--green);
+    margin-bottom: 4px;
+  }
+  .login-box p {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+  .login-box input {
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+  .login-box input:focus { outline: none; border-color: var(--green); }
+  .login-error {
+    color: var(--red);
+    font-size: 13px;
+    margin-bottom: 12px;
+    display: none;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-green {
+    background: var(--green);
+    color: #000;
+  }
+  .btn-green:hover { opacity: 0.85; }
+  .btn-green:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .btn-outline:hover { border-color: var(--muted); }
+  .btn-red {
+    background: var(--red);
+    color: #fff;
+  }
+
+  /* Dashboard */
+  .dashboard { display: none; }
+  .dashboard.active { display: block; }
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 32px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .topbar h1 {
+    font-size: 18px;
+    color: var(--green);
+  }
+  .topbar .meta {
+    font-size: 13px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Stats */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    padding: 24px 32px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+  }
+  .stat-card .label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 4px;
+  }
+  .stat-card .value {
+    font-size: 28px;
+    font-weight: 700;
+  }
+  .stat-card .value.green { color: var(--green); }
+  .stat-card .value.blue { color: var(--blue); }
+  .stat-card .value.yellow { color: var(--yellow); }
+  .stat-card .value.red { color: var(--red); }
+
+  /* Compose */
+  .compose {
+    padding: 24px 32px;
+    max-width: 900px;
+  }
+  .compose h2 {
+    font-size: 16px;
+    color: var(--muted);
+    margin-bottom: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 400;
+  }
+  .field { margin-bottom: 16px; }
+  .field label {
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .field input, .field select, .field textarea {
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+  }
+  .field textarea {
+    min-height: 300px;
+    resize: vertical;
+    line-height: 1.6;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    outline: none;
+    border-color: var(--green);
+  }
+  .field select {
+    appearance: none;
+    cursor: pointer;
+  }
+
+  /* Actions */
+  .actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  /* Preview */
+  .preview-frame {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 16px;
+    display: none;
+  }
+  .preview-frame iframe {
+    width: 100%;
+    height: 600px;
+    border: none;
+  }
+
+  /* Status */
+  .send-status {
+    margin-top: 16px;
+    padding: 16px 20px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    display: none;
+  }
+  .send-status.success {
+    background: var(--green-dim);
+    border: 1px solid var(--green);
+    color: var(--green);
+    display: block;
+  }
+  .send-status.error {
+    background: rgba(239,68,68,0.1);
+    border: 1px solid var(--red);
+    color: var(--red);
+    display: block;
+  }
+  .send-status.loading {
+    background: rgba(59,130,246,0.1);
+    border: 1px solid var(--blue);
+    color: var(--blue);
+    display: block;
+  }
+
+  /* Confirm dialog */
+  .confirm-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  }
+  .confirm-overlay.active { display: flex; }
+  .confirm-dialog {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    max-width: 440px;
+    width: 90%;
+  }
+  .confirm-dialog h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  .confirm-dialog p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  .confirm-dialog .actions { justify-content: flex-end; }
+
+  /* Warm-up banner */
+  .warmup-banner {
+    margin: 0 32px;
+    padding: 16px 20px;
+    background: rgba(234,179,8,0.08);
+    border: 1px solid rgba(234,179,8,0.25);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--yellow);
+    line-height: 1.5;
+  }
+  .warmup-banner strong { display: block; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<!-- Login Screen -->
+<div class="login-screen" id="login-screen">
+  <div class="login-box">
+    <h1>// admin_panel</h1>
+    <p>CRE + AI Weekly newsletter dashboard</p>
+    <div class="login-error" id="login-error">Invalid password</div>
+    <input type="password" id="password-input" placeholder="$ enter password" autofocus>
+    <button class="btn btn-green" style="width:100%" onclick="handleLogin()">Authenticate</button>
+  </div>
+</div>
+
+<!-- Dashboard -->
+<div class="dashboard" id="dashboard">
+  <div class="topbar">
+    <h1>// newsletter_admin</h1>
+    <div>
+      <span class="meta" id="user-info">authenticated</span>
+      <button class="btn btn-outline" style="margin-left:12px;padding:6px 14px;font-size:12px" onclick="handleLogout()">Logout</button>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-bar" id="stats-bar">
+    <div class="stat-card">
+      <div class="label">// active</div>
+      <div class="value green" id="stat-active">-</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">// free</div>
+      <div class="value blue" id="stat-free">-</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">// pro</div>
+      <div class="value yellow" id="stat-pro">-</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">// unsubscribed</div>
+      <div class="value red" id="stat-unsub">-</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">// total</div>
+      <div class="value" id="stat-total">-</div>
+    </div>
+  </div>
+
+  <!-- Warm-up tip -->
+  <div class="warmup-banner">
+    <strong>Domain warm-up reminder</strong>
+    New domain? Start with 50 emails/day for 2 weeks, then gradually increase. Send to engaged users first. Monitor your Resend dashboard for bounce/complaint rates.
+  </div>
+
+  <!-- Compose -->
+  <div class="compose">
+    <h2>$ compose_newsletter</h2>
+
+    <div class="field">
+      <label>subject</label>
+      <input type="text" id="email-subject" placeholder="This Week: AI Finds Hidden Value in Office Conversions">
+    </div>
+
+    <div class="field">
+      <label>audience</label>
+      <select id="email-audience">
+        <option value="all">All subscribers</option>
+        <option value="free">Free only</option>
+        <option value="pro">Pro only</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>content (html)</label>
+      <textarea id="email-content" placeholder="<h2>This Week in CRE + AI</h2>
+<p>Here's what happened...</p>
+
+<h3>1. AI-Powered Lease Analysis</h3>
+<p>New tools can now read 200-page leases in 30 seconds...</p>"></textarea>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-outline" onclick="handlePreview()">Preview Email</button>
+      <button class="btn btn-green" id="send-btn" onclick="showConfirm()">Send Newsletter</button>
+    </div>
+
+    <div class="preview-frame" id="preview-frame">
+      <iframe id="preview-iframe"></iframe>
+    </div>
+
+    <div class="send-status" id="send-status"></div>
+  </div>
+</div>
+
+<!-- Confirm Dialog -->
+<div class="confirm-overlay" id="confirm-overlay">
+  <div class="confirm-dialog">
+    <h3>Send newsletter?</h3>
+    <p id="confirm-text">This will send the newsletter to all active subscribers. This action cannot be undone.</p>
+    <div class="actions">
+      <button class="btn btn-outline" onclick="hideConfirm()">Cancel</button>
+      <button class="btn btn-red" onclick="handleSend()">Yes, Send Now</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let authToken = '';
+
+  // Login
+  document.getElementById('password-input').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') handleLogin();
+  });
+
+  async function handleLogin() {
+    const pw = document.getElementById('password-input').value;
+    if (!pw) return;
+
+    authToken = pw;
+
+    try {
+      const res = await fetch('/api/subscribers', {
+        headers: { Authorization: `Bearer ${pw}` },
+      });
+
+      if (res.status === 401) {
+        document.getElementById('login-error').style.display = 'block';
+        authToken = '';
+        return;
+      }
+
+      const data = await res.json();
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('dashboard').classList.add('active');
+      updateStats(data);
+    } catch (err) {
+      document.getElementById('login-error').textContent = 'Connection error';
+      document.getElementById('login-error').style.display = 'block';
+    }
+  }
+
+  function handleLogout() {
+    authToken = '';
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('dashboard').classList.remove('active');
+    document.getElementById('password-input').value = '';
+    document.getElementById('login-error').style.display = 'none';
+  }
+
+  function updateStats(data) {
+    document.getElementById('stat-active').textContent = data.active || 0;
+    document.getElementById('stat-free').textContent = data.free || 0;
+    document.getElementById('stat-pro').textContent = data.pro || 0;
+    document.getElementById('stat-unsub').textContent = data.unsubscribed || 0;
+    document.getElementById('stat-total').textContent = data.total || 0;
+  }
+
+  // Refresh stats
+  async function refreshStats() {
+    try {
+      const res = await fetch('/api/subscribers', {
+        headers: { Authorization: `Bearer ${authToken}` },
+      });
+      if (res.ok) updateStats(await res.json());
+    } catch (e) {}
+  }
+
+  // Preview
+  async function handlePreview() {
+    const subject = document.getElementById('email-subject').value;
+    const content = document.getElementById('email-content').value;
+
+    if (!subject || !content) {
+      alert('Subject and content are required');
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/preview-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authToken}`,
+        },
+        body: JSON.stringify({ subject, content }),
+      });
+
+      const html = await res.text();
+      const frame = document.getElementById('preview-frame');
+      const iframe = document.getElementById('preview-iframe');
+
+      frame.style.display = 'block';
+      iframe.srcdoc = html;
+    } catch (err) {
+      alert('Preview failed: ' + err.message);
+    }
+  }
+
+  // Confirm dialog
+  function showConfirm() {
+    const subject = document.getElementById('email-subject').value;
+    const audience = document.getElementById('email-audience').value;
+
+    if (!subject || !document.getElementById('email-content').value) {
+      alert('Subject and content are required');
+      return;
+    }
+
+    const audienceLabel = { all: 'all active', free: 'free', pro: 'pro' }[audience];
+    document.getElementById('confirm-text').textContent =
+      `This will send "${subject}" to ${audienceLabel} subscribers. This cannot be undone.`;
+    document.getElementById('confirm-overlay').classList.add('active');
+  }
+
+  function hideConfirm() {
+    document.getElementById('confirm-overlay').classList.remove('active');
+  }
+
+  // Send
+  async function handleSend() {
+    hideConfirm();
+
+    const subject = document.getElementById('email-subject').value;
+    const content = document.getElementById('email-content').value;
+    const audience = document.getElementById('email-audience').value;
+    const status = document.getElementById('send-status');
+    const btn = document.getElementById('send-btn');
+
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    status.className = 'send-status loading';
+    status.textContent = '$ sending newsletter... please wait';
+    status.style.display = 'block';
+
+    try {
+      const res = await fetch('/api/send-newsletter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authToken}`,
+        },
+        body: JSON.stringify({ subject, content, audience }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.error || 'Send failed');
+
+      status.className = 'send-status success';
+      status.textContent = `sent: ${data.sent} | failed: ${data.failed} | total: ${data.total}`;
+
+      refreshStats();
+    } catch (err) {
+      status.className = 'send-status error';
+      status.textContent = `error: ${err.message}`;
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Send Newsletter';
+    }
+  }
+</script>
+</body>
+</html>

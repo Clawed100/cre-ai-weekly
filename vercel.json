@@ -1,0 +1,39 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "robots.txt",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "og-image.png",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    { "src": "/og-image.png", "dest": "/og-image.png" },
+    { "src": "/robots.txt", "dest": "/robots.txt" },
+    { "src": "/api/webhook", "dest": "/api/webhook.js" },
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/success.html", "dest": "/success.html" },
+    { "src": "/admin.html", "dest": "/admin.html" },
+    { "src": "/unsubscribe.html", "dest": "/unsubscribe.html" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ],
+  "functions": {
+    "api/send-newsletter.js": {
+      "maxDuration": 60
+    },
+    "api/subscribers.js": {
+      "maxDuration": 30
+    }
+  }
+}
