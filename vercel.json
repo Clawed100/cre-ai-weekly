@@ -1,93 +1,5 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "*.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "robots.txt",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "sitemap.xml",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "og-image.png",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "404.html",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/og-image.png",
-      "dest": "/og-image.png",
-      "headers": {
-        "Cache-Control": "public, max-age=31536000, immutable"
-      }
-    },
-    {
-      "src": "/robots.txt",
-      "dest": "/robots.txt",
-      "headers": {
-        "Content-Type": "text/plain"
-      }
-    },
-    {
-      "src": "/sitemap.xml",
-      "dest": "/sitemap.xml",
-      "headers": {
-        "Content-Type": "application/xml",
-        "Cache-Control": "public, max-age=86400"
-      }
-    },
-    { "src": "/api/health", "dest": "/api/health.js" },
-    { "src": "/api/webhook", "dest": "/api/webhook.js" },
-    { "src": "/api/(.*)", "dest": "/api/$1" },
-    {
-      "src": "/(.*\\.html)$",
-      "dest": "/$1",
-      "headers": {
-        "Cache-Control": "public, max-age=0, must-revalidate"
-      }
-    },
-    {
-      "src": "/success.html",
-      "dest": "/success.html",
-      "headers": {
-        "Cache-Control": "public, max-age=0, must-revalidate"
-      }
-    },
-    {
-      "src": "/admin.html",
-      "dest": "/admin.html",
-      "headers": {
-        "Cache-Control": "public, max-age=0, must-revalidate",
-        "X-Robots-Tag": "noindex, nofollow"
-      }
-    },
-    {
-      "src": "/unsubscribe.html",
-      "dest": "/unsubscribe.html",
-      "headers": {
-        "Cache-Control": "public, max-age=0, must-revalidate"
-      }
-    },
-    {
-      "src": "/404",
-      "dest": "/404.html",
-      "status": 404
-    },
-    { "src": "/(.*)", "dest": "/index.html" }
-  ],
   "functions": {
     "api/send-newsletter.js": {
       "maxDuration": 60,
@@ -126,6 +38,12 @@
       "memory": 256
     }
   },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
