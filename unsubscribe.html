@@ -130,7 +130,7 @@
 </div>
 
 <script>
-  // ââ CANVAS MOUSE TRAIL ââ
+  // ── CANVAS MOUSE TRAIL ──
   (function() {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
@@ -231,7 +231,7 @@
     render();
 
     window.addEventListener('focus', () => { if (!ctx.running) { ctx.running = true; render(); } });
-    window.adEventListener('blur', () => { ctx.running = true; });
+    window.addEventListener('blur', () => { ctx.running = true; });
   })();
 </script>
 
