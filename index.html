@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CRE + AI Weekly &mdash; AI Insights for Commercial Real Estate Pros</title>
+  <meta name="description" content="Weekly newsletter covering how AI is changing commercial real estate. Real tools, real numbers, no hype. Trusted by 4,200+ CRE professionals.">
+  <meta name="author" content="Jeff">
+  <link rel="canonical" href="/">
+
+  <!-- Security & Metadata -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" content="#0a0a0b">
+  <meta name="color-scheme" content="light dark">
+
+  <!-- Content Security Policy -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.stripe.com; frame-src https://js.stripe.com https://stripe.com; object-src 'none'; base-uri 'self'; form-action 'self';">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="CRE + AI Weekly — AI Insights for Commercial Real Estate">
+  <meta property="og:description" content="Weekly newsletter covering how AI is changing commercial real estate. Real tools, real numbers, no hype.">
+  <meta property="og:url" content="/">
+  <meta property="og:site_name" content="CRE + AI Weekly">
+  <meta property="og:image" content="/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CRE + AI Weekly — AI Insights for Commercial Real Estate">
+  <meta name="twitter:description" content="Weekly newsletter covering how AI is changing commercial real estate. Real tools, real numbers, no hype.">
+  <meta name="twitter:image" content="/og-image.png">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NewsletterIssue",
+    "name": "CRE + AI Weekly",
+    "description": "Weekly newsletter covering how AI is changing commercial real estate",
+    "publisher": {
+      "@type": "Organization",
+      "name": "CRE + AI Weekly",
+      "url": "/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "/og-image.png"
+      }
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Jeff"
+    }
+  }
+  </script>
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%230a0a0b'/><text x='50' y='62' font-family='monospace' font-size='36' font-weight='bold' fill='%2322c55e' text-anchor='middle'>CRE</text></svg>">
+
+  <!-- Font Preload & Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" as="style">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0b;
+      --bg-1: #111113;
+      --bg-2: #19191c;
+      --bg-3: #222226;
+      --text: #e4e4e7;
+      --text-2: #a1a1aa;
+      --text-3: #71717a;
+      --border: #27272a;
+      --border-2: #3f3f46;
+      --green: #22c55e;
+      --green-dim: rgba(34,197,94,.1);
+      --green-glow: rgba(34,197,94,.25);
+      --cyan: #06b6d4;
+      --cyan-dim: rgba(6,182,212,.1);
+      --yellow: #eab308;
+      --yellow-dim: rgba(234,179,8,.1);
+      --red: #ef4444;
+      --red-dim: rgba(239,68,68,.1);
+      --purple: #a855f7;
+      --purple-dim: rgba(168,85,247,.1);
+      --blue: #3b82f6;
+      --mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+      --sans: 'Space Grotesk', -apple-system, system-ui, sans-serif;
+      --radius: 8px;
+      --transition: .15s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      font-size: 15px;
+    }
+
+    ::selection { background: var(--green); color: #000; }
+
+    /* Skip to content link */
+    .skip-to-content {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--green);
+      color: #000;
+      padding: 8px 16px;
+      text-decoration: none;
+      z-index: 200;
+      border-radius: 0 0 4px 0;
+      font-weight: 600;
+    }
+    .skip-to-content:focus {
+      top: 0;
+    }
+
+    /* Accessibility: focus-visible for keyboard navigation */
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    select:focus-visible {
+      outline: 2px solid var(--green);
+      outline-offset: 2px;
+    }
+
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* Dark mode support */
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #fafaf9;
+        --bg-1: #f5f5f4;
+        --bg-2: #f0ede9;
+        --text: #18181b;
+        --text-2: #52525b;
+        --text-3: #71717a;
+        --border: #e7e5e4;
+      }
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,11,.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+    }
+    .nav-inner {
+      max-width: 1000px; margin: 0 auto;
+      padding: 12px 0;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-brand {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; color: var(--text);
+    }
+    .nav-icon {
+      font-family: var(--mono); font-size: .7rem; font-weight: 700;
+      color: var(--green);
+      padding: 4px 8px; border-radius: 4px;
+      border: 1px solid var(--green);
+      background: var(--green-dim);
+      letter-spacing: .04em;
+    }
+    .nav-title { font-weight: 700; font-size: .85rem; letter-spacing: -.02em; }
+    .nav-actions { display: flex; gap: 8px; align-items: center; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 8px 16px; border-radius: 6px;
+      font-size: .82rem; font-weight: 600;
+      cursor: pointer; border: none; text-decoration: none;
+      transition: all var(--transition);
+      font-family: var(--sans); letter-spacing: -.01em;
+    }
+    .btn-ghost { background: transparent; color: var(--text-3); }
+    .btn-ghost:hover { color: var(--text); background: var(--bg-2); }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border-2);
+    }
+    .btn-outline:hover { border-color: var(--text-3); background: var(--bg-2); }
+    .btn-green {
+      background: var(--green); color: #000; font-weight: 700;
+    }
+    .btn-green:hover { background: #16a34a; }
+    .btn-yellow {
+      background: var(--yellow); color: #000; font-weight: 700;
+    }
+    .btn-yellow:hover { background: #ca8a04; }
+    .btn-lg { padding: 12px 24px; font-size: .9rem; }
+
+    /* Touch target minimum size (44px) */
+    @media (hover: none) and (pointer: coarse) {
+      .btn {
+        min-height: 44px;
+        min-width: 44px;
+      }
+      input, textarea, select {
+        min-height: 44px;
+      }
+    }
+
+    /* Print styles */
+    @media print {
+      .nav, .paywall, .modal, .cta-form, .nav-actions, button {
+        display: none !important;
+      }
+      body {
+        background: #fff;
+        color: #000;
+      }
+      a {
+        text-decoration: underline;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        page-break-after: avoid;
+      }
+      img {
+        max-width: 100%;
+      }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 80px 20px 56px;
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 50% 50% at 50% 0%, rgba(34,197,94,.06), transparent 60%),
+        radial-gradient(ellipse 40% 40% at 80% 80%, rgba(6,182,212,.04), transparent 50%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 720px; margin: 0 auto; position: relative;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-family: var(--mono); font-size: .68rem; font-weight: 500;
+      color: var(--green); letter-spacing: .02em;
+      padding: 4px 12px; border-radius: 4px;
+      background: var(--green-dim);
+      border: 1px solid rgba(34,197,94,.2);
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-family: var(--sans);
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 700; line-height: 1.1;
+      letter-spacing: -.04em;
+      margin-bottom: 20px;
+    }
+    .hero h1 .hl {
+      color: var(--green);
+    }
+    .hero-desc {
+      font-size: 1.05rem; color: var(--text-2);
+      max-width: 540px; margin-bottom: 32px; line-height: 1.75;
+    }
+    .hero-cta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 32px; }
+    .hero-proof {
+      font-family: var(--mono); font-size: .72rem; color: var(--text-3);
+    }
+    .hero-proof strong { color: var(--text-2); }
+
+    /* ── WRAP ── */
+    .wrap { max-width: 700px; margin: 0 auto; padding: 0 20px; }
+    .wrap-wide { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+
+    /* ── STATS ── */
+    .stats {
+      padding: 32px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 0; max-width: 1000px; margin: 0 auto;
+    }
+    @media (max-width: 640px) { .stats-grid { grid-template-columns: 1fr; } }
+    .stat {
+      text-align: center; padding: 20px 16px;
+      border-right: 1px solid var(--border);
+    }
+    .stat:last-child { border-right: none; }
+    @media (max-width: 640px) {
+      .stat { border-right: none; border-bottom: 1px solid var(--border); }
+      .stat:last-child { border-bottom: none; }
+    }
+    .stat-val {
+      font-family: var(--mono); font-size: 2rem; font-weight: 700;
+      line-height: 1; margin-bottom: 4px;
+    }
+    .stat-label { font-size: .8rem; color: var(--text-3); }
+
+    /* ── ARTICLE ── */
+    .article { padding: 48px 0 40px; }
+    .article-meta {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 32px; padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .article-av {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--bg-3); border: 2px solid var(--green);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--mono); font-size: .75rem; font-weight: 700;
+      color: var(--green);
+    }
+    .by-name { font-weight: 700; font-size: .88rem; }
+    .by-date { font-family: var(--mono); font-size: .7rem; color: var(--text-3); }
+
+    .article h2 {
+      font-family: var(--sans);
+      font-size: 1.6rem; font-weight: 700;
+      letter-spacing: -.03em; line-height: 1.2;
+      margin: 48px 0 16px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+    .article h2:first-of-type { margin-top: 0; border-top: none; padding-top: 0; }
+    .sec-num {
+      font-family: var(--mono); font-size: .65rem; font-weight: 700;
+      color: #000; background: var(--green);
+      padding: 2px 8px; border-radius: 4px;
+      margin-right: 8px; vertical-align: 2px;
+      letter-spacing: .02em;
+    }
+    .article p {
+      font-size: .95rem; color: var(--text-2);
+      margin-bottom: 1.2em; line-height: 1.8;
+    }
+    .article p strong { color: var(--text); }
+    .article > p:first-of-type { font-size: 1.05rem; color: var(--text); }
+
+    .article ul {
+      list-style: none; padding: 0; margin: 0 0 1.5em;
+    }
+    .article ul li {
+      position: relative; padding: 8px 0 8px 20px;
+      font-size: .9rem; color: var(--text-2);
+      border-bottom: 1px solid var(--border);
+      line-height: 1.7;
+    }
+    .article ul li:last-child { border-bottom: none; }
+    .article ul li::before {
+      content: ''; position: absolute; left: 2px; top: 16px;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green-glow);
+    }
+    .article ul li strong { color: var(--text); font-weight: 600; }
+
+    /* ── CHARTS ── */
+    .chart-box {
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .chart-label {
+      font-family: var(--mono); font-size: .65rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .06em;
+      color: var(--text-3); margin-bottom: 16px;
+    }
+
+    /* H-bars */
+    .h-bars { display: flex; flex-direction: column; gap: 10px; }
+    .h-bar-row { display: flex; align-items: center; gap: 12px; }
+    .h-bar-name {
+      width: 80px; font-family: var(--mono); font-size: .72rem;
+      color: var(--text-3); text-align: right; flex-shrink: 0;
+    }
+    .h-bar-track {
+      flex: 1; height: 28px; border-radius: 4px;
+      background: var(--bg-3); overflow: hidden;
+    }
+    .h-bar-fill {
+      height: 100%; border-radius: 4px;
+      display: flex; align-items: center; padding-left: 10px;
+      font-family: var(--mono); font-size: .7rem; font-weight: 600;
+    }
+    .fill-green { background: var(--green); color: #000; }
+    .fill-dim { background: var(--border-2); color: var(--text-3); }
+    .fill-cyan { background: var(--cyan); color: #000; }
+    .fill-yellow { background: var(--yellow); color: #000; }
+    .fill-red { background: var(--red); color: #fff; }
+    .fill-purple { background: var(--purple); color: #fff; }
+    .fill-blue { background: var(--blue); color: #fff; }
+
+    /* Compare */
+    .compare {
+      display: grid; grid-template-columns: 1fr 40px 1fr;
+      align-items: center;
+    }
+    .cmp-box { border-radius: var(--radius); padding: 20px; text-align: center; }
+    .cmp-box.old { background: var(--red-dim); border: 1px solid rgba(239,68,68,.15); }
+    .cmp-box.new { background: var(--green-dim); border: 1px solid rgba(34,197,94,.15); }
+    .cmp-label {
+      font-family: var(--mono); font-size: .6rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px;
+    }
+    .cmp-box.old .cmp-label { color: var(--red); }
+    .cmp-box.new .cmp-label { color: var(--green); }
+    .cmp-val {
+      font-family: var(--mono); font-size: 1.8rem; font-weight: 700; line-height: 1;
+    }
+    .cmp-box.old .cmp-val { color: var(--red); }
+    .cmp-box.new .cmp-val { color: var(--green); }
+    .cmp-note { font-size: .7rem; color: var(--text-3); margin-top: 4px; }
+    .cmp-arrow { text-align: center; font-family: var(--mono); font-size: 1.2rem; color: var(--text-3); }
+
+    /* Scale */
+    .scale-row {
+      display: flex; align-items: flex-end; gap: 20px; justify-content: center;
+      padding: 8px 0;
+    }
+    .scale-col { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .scale-bar { width: 56px; border-radius: 4px 4px 0 0; }
+    .scale-val { font-family: var(--mono); font-size: 1.2rem; font-weight: 700; }
+    .scale-lbl { font-family: var(--mono); font-size: .65rem; color: var(--text-3); }
+
+    /* V-bars */
+    .v-bars { display: flex; align-items: flex-end; gap: 8px; height: 110px; }
+    .v-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; justify-content: flex-end; }
+    .v-bar { width: 100%; border-radius: 3px 3px 0 0; }
+    .v-val { font-family: var(--mono); font-size: .65rem; font-weight: 600; color: var(--text-2); }
+    .v-lbl { font-family: var(--mono); font-size: .6rem; color: var(--text-3); }
+
+    /* ── CALLOUTS ── */
+    .callout {
+      border-radius: var(--radius);
+      padding: 16px 16px 16px 44px;
+      margin: 20px 0; position: relative;
+      font-size: .88rem; line-height: 1.7;
+    }
+    .callout::before {
+      position: absolute; left: 14px; top: 14px;
+      font-size: 1rem;
+    }
+    .callout strong { font-weight: 700; }
+    .co-green {
+      background: var(--green-dim);
+      border: 1px solid rgba(34,197,94,.15);
+      color: var(--green);
+    }
+    .co-green::before { content: '>'; font-family: var(--mono); font-weight: 700; color: var(--green); }
+    .co-yellow {
+      background: var(--yellow-dim);
+      border: 1px solid rgba(234,179,8,.15);
+      color: var(--yellow);
+    }
+    .co-yellow::before { content: '!'; font-family: var(--mono); font-weight: 700; color: var(--yellow); }
+    .co-cyan {
+      background: var(--cyan-dim);
+      border: 1px solid rgba(6,182,212,.15);
+      color: var(--cyan);
+    }
+    .co-cyan::before { content: '#'; font-family: var(--mono); font-weight: 700; color: var(--cyan); }
+
+    /* Jeff's take — terminal style */
+    .jeff {
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px; margin: 20px 0;
+      font-family: var(--mono); font-size: .8rem;
+      line-height: 1.7; color: var(--text-2);
+    }
+    .jeff::before {
+      content: '$ jeff --take';
+      display: block; color: var(--green); font-weight: 600;
+      margin-bottom: 8px; font-size: .7rem;
+    }
+    .jeff strong { color: var(--text); }
+
+    /* ── PAYWALL ── */
+    .paywall { padding: 0 0 48px; }
+    .paywall-fade {
+      height: 100px;
+      background: linear-gradient(to bottom, transparent, var(--bg));
+    }
+    .paywall-card {
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 44px 28px; text-align: center;
+    }
+    .paywall-card h3 {
+      font-size: 1.4rem; font-weight: 700;
+      letter-spacing: -.02em; margin-bottom: 8px;
+    }
+    .paywall-card p {
+      color: var(--text-3); max-width: 420px;
+      margin: 0 auto 24px; font-size: .9rem;
+    }
+    .paywall-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── PREMIUM ── */
+    #premium-content h2 {
+      font-size: 1.4rem; font-weight: 700;
+      letter-spacing: -.02em; margin: 48px 0 16px;
+      padding-top: 28px; border-top: 1px solid var(--border);
+    }
+    #premium-content p {
+      font-size: .92rem; color: var(--text-2);
+      margin-bottom: 1em; line-height: 1.75;
+    }
+    #premium-content p strong { color: var(--text); }
+    #premium-content ul { list-style: none; padding: 0; margin: 0 0 1.5em; }
+    #premium-content ul li {
+      position: relative; padding: 8px 0 8px 20px;
+      font-size: .9rem; color: var(--text-2);
+      border-bottom: 1px solid var(--border); line-height: 1.7;
+    }
+    #premium-content ul li:last-child { border-bottom: none; }
+    #premium-content ul li::before {
+      content: ''; position: absolute; left: 2px; top: 16px;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green); box-shadow: 0 0 6px var(--green-glow);
+    }
+    #premium-content ul li strong { color: var(--text); font-weight: 600; }
+
+    /* Tool pills */
+    .tool-section { margin: 12px 0 24px; }
+    .tool-section-label {
+      display: inline-block;
+      font-family: var(--mono); font-size: .6rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .04em;
+      color: var(--text-3); background: var(--bg-2);
+      border: 1px solid var(--border);
+      padding: 3px 10px; border-radius: 4px; margin-bottom: 10px;
+    }
+    .tool-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tool-pill {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 6px 12px;
+      font-size: .8rem; color: var(--text-2);
+      transition: all var(--transition);
+    }
+    .tool-pill:hover { border-color: var(--border-2); background: var(--bg-2); }
+    .tool-pill .dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--green);
+    }
+    .tool-pill strong { color: var(--text); font-weight: 600; }
+
+    /* Timeline */
+    .timeline { position: relative; padding-left: 24px; margin: 20px 0; }
+    .timeline::before {
+      content: ''; position: absolute; left: 5px; top: 0; bottom: 0;
+      width: 1px; background: var(--border-2);
+    }
+    .tl-item {
+      position: relative; padding: 10px 0 18px 18px;
+      font-size: .88rem; color: var(--text-2); line-height: 1.65;
+    }
+    .tl-item::before {
+      content: ''; position: absolute; left: -22px; top: 15px;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--bg); border: 2px solid var(--green);
+    }
+    .tl-item strong { color: var(--text); }
+
+    /* ── PRICING ── */
+    .pricing {
+      padding: 56px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .pricing-header { text-align: center; margin-bottom: 36px; }
+    .pricing-header h2 {
+      font-size: 1.8rem; font-weight: 700; letter-spacing: -.03em;
+    }
+    .pricing-header p { color: var(--text-3); font-size: .88rem; margin-top: 6px; }
+    .pricing-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px; max-width: 660px; margin: 0 auto;
+    }
+    @media (max-width: 640px) { .pricing-grid { grid-template-columns: 1fr; } }
+    .plan {
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px 22px;
+      position: relative;
+    }
+    .plan:hover { border-color: var(--border-2); }
+    .plan.hot {
+      border-color: var(--yellow);
+      box-shadow: 0 0 30px rgba(234,179,8,.06);
+    }
+    .plan-badge {
+      position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+      font-family: var(--mono); font-size: .6rem; font-weight: 700;
+      background: var(--yellow); color: #000;
+      padding: 2px 12px; border-radius: 4px;
+      text-transform: uppercase; letter-spacing: .04em;
+    }
+    .plan-name {
+      font-family: var(--mono); font-size: .65rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .06em;
+      color: var(--text-3); margin-bottom: 6px;
+    }
+    .plan-price {
+      font-family: var(--mono); font-size: 2.4rem; font-weight: 700; line-height: 1;
+    }
+    .plan-period { font-family: var(--mono); font-size: .72rem; color: var(--text-3); margin-bottom: 20px; }
+    .plan-features { list-style: none; padding: 0; margin: 0 0 20px; }
+    .plan-features li {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 0; font-size: .82rem; color: var(--text-2);
+    }
+    .plan-features .ic {
+      font-family: var(--mono); font-size: .65rem; font-weight: 700;
+      width: 16px; height: 16px; border-radius: 3px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .ic-y { background: var(--green-dim); color: var(--green); }
+    .ic-n { background: var(--bg-3); color: var(--text-3); }
+    .plan .btn { width: 100%; }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      padding: 56px 20px;
+      background: var(--bg-1);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+    .cta-banner h2 {
+      font-size: 1.6rem; font-weight: 700; letter-spacing: -.02em; margin-bottom: 8px;
+    }
+    .cta-banner p { color: var(--text-3); margin-bottom: 24px; font-size: .9rem; }
+    .cta-form {
+      display: flex; gap: 8px; max-width: 380px; margin: 0 auto;
+    }
+    .cta-form input {
+      flex: 1; padding: 10px 14px;
+      border-radius: 6px; border: 1px solid var(--border-2);
+      background: var(--bg-2); color: var(--text);
+      font-size: .9rem; font-family: var(--sans); outline: none;
+      transition: border-color var(--transition);
+    }
+    .cta-form input::placeholder { color: var(--text-3); }
+    .cta-form input:focus { border-color: var(--green); }
+    @media (max-width: 480px) { .cta-form { flex-direction: column; } }
+    #banner-success { color: var(--green); font-family: var(--mono); font-size: .82rem; margin-top: 12px; }
+
+    /* ── COMMENTS ── */
+    .comments {
+      max-width: 700px; margin: 0 auto;
+      padding: 36px 20px 48px;
+    }
+    .comments-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 18px; padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .comments-header h3 { font-size: .9rem; font-weight: 700; }
+    .comments-count {
+      font-family: var(--mono); font-size: .65rem; color: var(--text-3);
+      background: var(--bg-2); padding: 3px 10px;
+      border-radius: 4px; border: 1px solid var(--border);
+    }
+    .comment { display: flex; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+    .comment:last-of-type { border-bottom: none; }
+    .cm-av {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--mono); font-size: .6rem; font-weight: 700; flex-shrink: 0;
+    }
+    .cm-av.a1 { background: var(--green-dim); color: var(--green); }
+    .cm-av.a2 { background: var(--purple-dim); color: var(--purple); }
+    .cm-av.a3 { background: var(--yellow-dim); color: var(--yellow); }
+    .cm-body { flex: 1; }
+    .cm-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
+    .cm-name { font-weight: 600; font-size: .82rem; }
+    .cm-time { font-family: var(--mono); font-size: .65rem; color: var(--text-3); }
+    .cm-text { font-size: .85rem; color: var(--text-2); line-height: 1.6; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 20px; text-align: center;
+      font-family: var(--mono); font-size: .68rem; color: var(--text-3);
+    }
+    footer a { color: var(--green); text-decoration: none; }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,.6);
+      backdrop-filter: blur(4px);
+      z-index: 1000; align-items: center; justify-content: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: var(--bg-2);
+      border: 1px solid var(--border-2);
+      border-radius: var(--radius);
+      padding: 36px 28px; max-width: 380px; width: 92%;
+      text-align: center; position: relative;
+      box-shadow: 0 20px 60px rgba(0,0,0,.4);
+      animation: modalIn .2s ease;
+    }
+    @keyframes modalIn {
+      from { opacity:0; transform: translateY(12px); }
+      to { opacity:1; transform: none; }
+    }
+    .modal-close {
+      position: absolute; top: 10px; right: 12px;
+      width: 28px; height: 28px; border-radius: 4px;
+      background: var(--bg-3); border: none;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: .85rem; color: var(--text-3);
+      transition: all var(--transition);
+    }
+    .modal-close:hover { background: var(--border); color: var(--text); }
+    .modal h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; letter-spacing: -.02em; }
+    .modal p { font-size: .82rem; color: var(--text-3); margin-bottom: 18px; line-height: 1.5; }
+    .modal input[type="email"] {
+      width: 100%; padding: 10px 12px;
+      border: 1px solid var(--border-2); border-radius: 6px;
+      background: var(--bg-1); color: var(--text);
+      font-size: .9rem; font-family: var(--sans); outline: none;
+      margin-bottom: 10px; transition: border-color var(--transition);
+    }
+    .modal input[type="email"]::placeholder { color: var(--text-3); }
+    .modal input[type="email"]:focus { border-color: var(--green); }
+    .modal .btn { width: 100%; padding: 11px; font-size: .9rem; }
+    .modal .switch-link { display: block; margin-top: 12px; font-size: .78rem; color: var(--text-3); }
+    .modal .switch-link a { color: var(--green); cursor: pointer; text-decoration: underline; }
+    .success-msg { display: none; padding: 14px; }
+    .success-msg.show { display: block; }
+    .success-check {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--green-dim);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 12px; font-family: var(--mono); font-size: 1.1rem; color: var(--green);
+    }
+
+    .author-avatar-lg {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--bg-3); border: 2px solid var(--green);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--mono); font-size: .65rem; font-weight: 700;
+      color: var(--green);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Skip to main content link for accessibility -->
+<a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+<!-- NAV -->
+<nav class="nav" id="nav" aria-label="Primary navigation">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand" aria-label="CRE + AI Weekly Home">
+      <div class="nav-icon">CRE</div>
+      <span class="nav-title">CRE + AI Weekly</span>
+    </a>
+    <div class="nav-actions" id="nav-actions">
+      <button class="btn btn-ghost" onclick="openModal('signin')" aria-label="Sign in to your account">Sign in</button>
+      <button class="btn btn-green" onclick="openModal('free')" aria-label="Subscribe to the free newsletter">Subscribe</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">// issue_042 &mdash; 2026.03.08</div>
+    <h1>AI is changing commercial real estate. <span class="hl">Here's how.</span></h1>
+    <p class="hero-desc">Five practical ways AI is already saving time and money for CRE pros. Real tools. Real numbers. No&nbsp;hype.</p>
+    <div class="hero-cta">
+      <button class="btn btn-green btn-lg" onclick="openModal('free')">Get it free every week</button>
+      <button class="btn btn-outline btn-lg" onclick="document.getElementById('article').scrollIntoView({behavior:'smooth'})">Read the guide &darr;</button>
+    </div>
+    <p class="hero-proof">Trusted by <strong>4,200+</strong> CRE professionals weekly</p>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-grid">
+    <div class="stat">
+      <div class="stat-val" style="color:var(--green)">40%</div>
+      <div class="stat-label">faster underwriting</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" style="color:var(--cyan)">3x</div>
+      <div class="stat-label">more comps per hour</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" style="color:var(--yellow)">$12k+</div>
+      <div class="stat-label">saved per property / year</div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLE -->
+<main id="main-content">
+<article class="article" id="article">
+  <div class="wrap">
+    <div class="article-meta">
+      <div class="article-av">J</div>
+      <div>
+        <div class="by-name">Jeff</div>
+        <div class="by-date">2026-03-08 &middot; 8 min read</div>
+      </div>
+    </div>
+
+    <p>Let me be direct: if you work in commercial real estate and haven't started using AI, you're leaving money on the table. I spent 18 months testing every AI tool I could find &mdash; on real deals, real properties, real tenants. Here's what actually works.</p>
+
+    <!-- 1 -->
+    <h2><span class="sec-num">01</span> Finding deals faster</h2>
+    <p><strong>Old way:</strong> 20 hours/week of manual research across databases. <strong>New way:</strong> AI does it in 5.</p>
+
+    <div class="chart-box">
+      <div class="chart-label">// hours_per_week: deal_sourcing</div>
+      <div class="h-bars">
+        <div class="h-bar-row">
+          <div class="h-bar-name">manual</div>
+          <div class="h-bar-track"><div class="h-bar-fill fill-dim" style="width:100%">20 hrs</div></div>
+        </div>
+        <div class="h-bar-row">
+          <div class="h-bar-name">with_ai</div>
+          <div class="h-bar-track"><div class="h-bar-fill fill-green" style="width:25%">5 hrs</div></div>
+        </div>
+      </div>
+    </div>
+
+    <ul>
+      <li>AI pulls <strong>off-market deals</strong> from county records, SEC filings, and news automatically</li>
+      <li>Flags properties likely to sell based on <strong>ownership duration and debt maturity</strong></li>
+      <li>Plain English search: "distressed office in Dallas under $15M" &rarr; curated results</li>
+      <li>Know when a <strong>competitor is circling a deal</strong> before the offer goes out</li>
+    </ul>
+
+    <div class="callout co-green">
+      <strong>Takeaway:</strong> AI doesn't replace your network. It finds deals your network misses. The best brokers combine both.
+    </div>
+
+    <!-- 2 -->
+    <h2><span class="sec-num">02</span> Faster, smarter underwriting</h2>
+    <p><strong>Old way:</strong> 6 hours per deal, manual spreadsheets. <strong>New way:</strong> 20 minutes, catches things humans miss.</p>
+
+    <div class="chart-box">
+      <div class="chart-label">// time_per_deal: underwriting</div>
+      <div class="compare">
+        <div class="cmp-box old">
+          <div class="cmp-label">before</div>
+          <div class="cmp-val">6 hrs</div>
+          <div class="cmp-note">manual</div>
+        </div>
+        <div class="cmp-arrow">&rarr;</div>
+        <div class="cmp-box new">
+          <div class="cmp-label">after</div>
+          <div class="cmp-val">20 min</div>
+          <div class="cmp-note">ai-assisted</div>
+        </div>
+      </div>
+    </div>
+
+    <ul>
+      <li>AI reads <strong>rent rolls, T-12s, operating statements</strong> &mdash; extracts every number</li>
+      <li>Run <strong>100 scenarios</strong> (rent changes, cap rates, exit timing) in seconds</li>
+      <li>Spots red flags: <strong>inflated occupancy, deferred maintenance, lease rollover risk</strong></li>
+      <li>Auto-generates <strong>investment memos</strong> with comps and return projections</li>
+    </ul>
+
+    <div class="jeff">
+      Tested on 3 recent acquisitions. <strong>AI was within 2% of my analyst's numbers</strong> &mdash; in a fraction of the time. It frees your team to focus on judgment calls.
+    </div>
+
+    <!-- 3 -->
+    <h2><span class="sec-num">03</span> Managing more with less</h2>
+    <p><strong>Old way:</strong> Reactive maintenance, things break then you fix them. <strong>New way:</strong> AI predicts problems and scales your team.</p>
+
+    <div class="chart-box">
+      <div class="chart-label">// units_managed: same_team</div>
+      <div class="scale-row">
+        <div class="scale-col">
+          <div class="scale-val" style="color:var(--text-3)">200</div>
+          <div class="scale-bar" style="height:50px;background:var(--bg-3);"></div>
+          <div class="scale-lbl">before</div>
+        </div>
+        <div style="font-family:var(--mono);color:var(--text-3);align-self:center;">&rarr;</div>
+        <div class="scale-col">
+          <div class="scale-val" style="color:var(--green)">600</div>
+          <div class="scale-bar" style="height:130px;background:var(--green);"></div>
+          <div class="scale-lbl">with_ai</div>
+        </div>
+      </div>
+      <p style="text-align:center;font-family:var(--mono);font-size:.65rem;color:var(--text-3);margin-top:8px;">// same team, 3x portfolio</p>
+    </div>
+
+    <ul>
+      <li><strong>Predict maintenance needs</strong> &mdash; catch HVAC issues before emergencies</li>
+      <li><strong>AI handles tenant questions</strong> &mdash; maintenance, lease info, amenity booking</li>
+      <li><strong>Cut energy costs 15-25%</strong> by adjusting building systems in real-time</li>
+      <li><strong>Automate vendor management</strong> &mdash; bids, performance tracking, proposals</li>
+    </ul>
+
+    <div class="callout co-green">
+      <strong>Takeaway:</strong> One PM went from 200 to 600 units with the same team. AI handles volume. Humans handle relationships.
+    </div>
+
+    <!-- 4 -->
+    <h2><span class="sec-num">04</span> Better leasing &amp; tenant experience</h2>
+    <p><strong>Old way:</strong> Slow leasing, tedious lease review, pricing by gut feel. <strong>New way:</strong> AI speeds up every step.</p>
+
+    <div class="chart-box">
+      <div class="chart-label">// revenue_impact: dynamic_pricing</div>
+      <div class="v-bars">
+        <div class="v-col">
+          <div class="v-val">base</div>
+          <div class="v-bar" style="height:40%;background:var(--bg-3);"></div>
+          <div class="v-lbl">Q1</div>
+        </div>
+        <div class="v-col">
+          <div class="v-val">+4%</div>
+          <div class="v-bar" style="height:52%;background:var(--yellow);opacity:.5;"></div>
+          <div class="v-lbl">Q2</div>
+        </div>
+        <div class="v-col">
+          <div class="v-val">+7%</div>
+          <div class="v-bar" style="height:65%;background:var(--yellow);opacity:.7;"></div>
+          <div class="v-lbl">Q3</div>
+        </div>
+        <div class="v-col">
+          <div class="v-val">+12%</div>
+          <div class="v-bar" style="height:85%;background:var(--yellow);"></div>
+          <div class="v-lbl">Q4</div>
+        </div>
+      </div>
+    </div>
+
+    <ul>
+      <li><strong>AI virtual tours</strong> &mdash; tenants see their branding in a space before signing</li>
+      <li><strong>90-page lease &rarr; seconds</strong> &mdash; every key term extracted</li>
+    </ul>
+  </div>
+</article>
+</main>
+
+<!-- PAYWALL -->
+<div class="wrap">
+  <div class="paywall" id="paywall">
+    <div class="paywall-fade"></div>
+    <div class="paywall-card">
+      <h3>Want the full playbook?</h3>
+      <p>Dynamic pricing data, portfolio analytics, tool reviews, and a week-by-week implementation plan.</p>
+      <div class="paywall-actions">
+        <button class="btn btn-green btn-lg" onclick="openModal('free')">Subscribe free</button>
+        <button class="btn btn-yellow btn-lg" onclick="openModal('pro')">Go Pro &mdash; $12/mo</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PREMIUM -->
+<div class="wrap" id="premium-content" style="display:none;">
+  <ul>
+    <li><strong>Dynamic lease pricing</strong> &mdash; AI adjusts rents based on real-time demand</li>
+    <li><strong>24/7 leasing chatbots</strong> that qualify prospects and schedule tours</li>
+    <li><strong>Predict tenant turnover</strong> &mdash; AI scores flight risk from engagement patterns</li>
+  </ul>
+  <div class="jeff">
+    Lease abstraction saves <strong>10+ hours/week</strong>. Dynamic pricing shows <strong>8-12% higher effective rents</strong> vs. setting prices manually.
+  </div>
+
+  <h2><span class="sec-num">05</span> Smarter portfolio decisions</h2>
+  <p><strong>Old way:</strong> Need a team of analysts and expensive software. <strong>New way:</strong> AI gives every investor institutional-grade analytics.</p>
+
+  <div class="chart-box">
+    <div class="chart-label">// ai_coverage: portfolio_analytics</div>
+    <div class="h-bars">
+      <div class="h-bar-row"><div class="h-bar-name">risk</div><div class="h-bar-track"><div class="h-bar-fill fill-red" style="width:90%"></div></div></div>
+      <div class="h-bar-row"><div class="h-bar-name">forecast</div><div class="h-bar-track"><div class="h-bar-fill fill-blue" style="width:80%"></div></div></div>
+      <div class="h-bar-row"><div class="h-bar-name">esg</div><div class="h-bar-track"><div class="h-bar-fill fill-green" style="width:70%"></div></div></div>
+      <div class="h-bar-row"><div class="h-bar-name">exit</div><div class="h-bar-track"><div class="h-bar-fill fill-yellow" style="width:85%"></div></div></div>
+    </div>
+  </div>
+
+  <ul>
+    <li><strong>Portfolio risk scoring</strong> &mdash; concentration risk, market exposure, tenant credit</li>
+    <li><strong>Know when to sell</strong> &mdash; AI factors in cap rates, debt markets, tax optimization</li>
+    <li><strong>Market forecasting</strong> from economic indicators, migration, construction pipelines</li>
+    <li><strong>ESG and carbon tracking</strong> &mdash; automated and investor-ready</li>
+    <li><strong>Auto-generated investor reports</strong> &mdash; quarterly updates, waterfalls, K-1 prep</li>
+  </ul>
+
+  <div class="callout co-cyan">
+    <strong>Takeaway:</strong> Portfolio-level AI analytics = better buy/sell/hold decisions. Your investors will notice.
+  </div>
+
+  <h2>The tools I actually use</h2>
+  <p>Not sponsored. Not affiliate links. Just what works after 18 months of testing.</p>
+
+  <div class="tool-section">
+    <div class="tool-section-label">research</div>
+    <div class="tool-pills">
+      <div class="tool-pill"><span class="dot"></span><strong>Claude</strong> &mdash; market research, OM review</div>
+      <div class="tool-pill"><span class="dot"></span><strong>Reonomy</strong> &mdash; ownership data</div>
+      <div class="tool-pill"><span class="dot"></span><strong>CompStak</strong> &mdash; lease &amp; sale comps</div>
+    </div>
+  </div>
+  <div class="tool-section">
+    <div class="tool-section-label">underwriting</div>
+    <div class="tool-pills">
+      <div class="tool-pill"><span class="dot"></span><strong>Claude + Excel</strong> &mdash; model building</div>
+      <div class="tool-pill"><span class="dot"></span><strong>Archer / Clik.ai</strong> &mdash; PDF extraction</div>
+    </div>
+  </div>
+  <div class="tool-section">
+    <div class="tool-section-label">property_mgmt</div>
+    <div class="tool-pills">
+      <div class="tool-pill"><span class="dot"></span><strong>HqO</strong> &mdash; tenant experience</div>
+      <div class="tool-pill"><span class="dot"></span><strong>Measurabl</strong> &mdash; ESG reporting</div>
+    </div>
+  </div>
+  <div class="tool-section">
+    <div class="tool-section-label">investor_relations</div>
+    <div class="tool-pills">
+      <div class="tool-pill"><span class="dot"></span><strong>Juniper Square</strong> &mdash; capital mgmt</div>
+      <div class="tool-pill"><span class="dot"></span><strong>Claude</strong> &mdash; quarterly letters</div>
+    </div>
+  </div>
+
+  <h2>Start here: 4-month plan</h2>
+  <p>You don't need to do everything at once. This order works.</p>
+
+  <div class="timeline">
+    <div class="tl-item"><strong>Week 1-2:</strong> Lease abstraction and document extraction. Immediate ROI, near-zero risk.</div>
+    <div class="tl-item"><strong>Week 3-4:</strong> AI underwriting alongside current process. Compare. Build trust.</div>
+    <div class="tl-item"><strong>Month 2:</strong> AI deal sourcing. Pick one submarket you know well.</div>
+    <div class="tl-item"><strong>Month 3:</strong> Tenant-facing AI pilot at one property.</div>
+    <div class="tl-item"><strong>Month 4+:</strong> Portfolio analytics. Clean data from earlier steps powers this.</div>
+  </div>
+
+  <div class="callout co-yellow">
+    <strong>Key principle:</strong> Start where data is cleanest, stakes lowest. Build confidence. Expand. Don't "AI everything" day one.
+  </div>
+</div>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="wrap-wide">
+    <div class="pricing-header">
+      <h2>Stay ahead of the curve</h2>
+      <p>Join 4,200+ CRE pros who get the AI edge every week.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="plan">
+        <div class="plan-name">free</div>
+        <div class="plan-price">$0</div>
+        <div class="plan-period">forever</div>
+        <ul class="plan-features">
+          <li><span class="ic ic-y">+</span> Weekly CRE + AI insights</li>
+          <li><span class="ic ic-y">+</span> Market trend summaries</li>
+          <li><span class="ic ic-y">+</span> Top 3 AI shifts with data</li>
+          <li><span class="ic ic-n">-</span><span style="color:var(--text-3)">Full tool reviews</span></li>
+          <li><span class="ic ic-n">-</span><span style="color:var(--text-3)">Implementation checklists</span></li>
+        </ul>
+        <button class="btn btn-outline" onclick="openModal('free')">Subscribe free</button>
+      </div>
+      <div class="plan hot">
+        <span class="plan-badge">popular</span>
+        <div class="plan-name">pro</div>
+        <div class="plan-price">$12</div>
+        <div class="plan-period">/month</div>
+        <ul class="plan-features">
+          <li><span class="ic ic-y">+</span> Everything in Free</li>
+          <li><span class="ic ic-y">+</span> Full AI tool breakdowns</li>
+          <li><span class="ic ic-y">+</span> Implementation plans</li>
+          <li><span class="ic ic-y">+</span> Deal case studies</li>
+          <li><span class="ic ic-y">+</span> Priority Q&amp;A with Jeff</li>
+        </ul>
+        <button class="btn btn-yellow" onclick="openModal('pro')">Go Pro</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-banner">
+  <h2>Don't miss the next issue</h2>
+  <p>Actionable AI insights for CRE. No fluff. No jargon.</p>
+  <form class="cta-form" onsubmit="event.preventDefault(); subscribeBanner();">
+    <label for="banner-email" style="display:none;">Email address</label>
+    <input type="email" id="banner-email" placeholder="your@email.com" required autocomplete="email" />
+    <button class="btn btn-green" type="submit" aria-label="Subscribe to newsletter">Subscribe</button>
+  </form>
+  <p id="banner-success" style="display:none;">You're in. Check your inbox.</p>
+</section>
+
+<!-- COMMENTS -->
+<section class="comments">
+  <div class="comments-header">
+    <h3>Discussion</h3>
+    <span class="comments-count">34</span>
+  </div>
+  <div class="comment">
+    <div class="cm-av a1">RM</div>
+    <div class="cm-body">
+      <div class="cm-meta"><span class="cm-name">Rachel Martinez</span><span class="cm-time">6h</span></div>
+      <p class="cm-text">The lease abstraction section alone is worth subscribing. We've been doing that manually for years.</p>
+    </div>
+  </div>
+  <div class="comment">
+    <div class="cm-av a2">DK</div>
+    <div class="cm-body">
+      <div class="cm-meta"><span class="cm-name">David Kim</span><span class="cm-time">4h</span></div>
+      <p class="cm-text">The before/after on underwriting time is exactly what I needed to pitch this to leadership.</p>
+    </div>
+  </div>
+  <div class="comment">
+    <div class="cm-av a3">SP</div>
+    <div class="cm-body">
+      <div class="cm-meta"><span class="cm-name">Sarah Patel</span><span class="cm-time">2h</span></div>
+      <p class="cm-text">Shared with acquisitions team. Implementation timeline made it clear where to start.</p>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:16px;">
+    <button class="btn btn-outline" onclick="openModal('free')">Sign in to comment</button>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 cre+ai weekly // jeff &middot; <a href="#pricing">subscribe</a></p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" id="modal-box"></div>
+</div>
+
+<script>
+  // ── NAV ──
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
+
+  // ── MODALS ──
+  function openModal(type) {
+    const overlay = document.getElementById('modal-overlay');
+    const box = document.getElementById('modal-box');
+    let html = '';
+    if (type === 'free') {
+      html = `
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <h3>Subscribe free</h3>
+        <p>Weekly CRE + AI insights. No spam.</p>
+        <form id="modal-form" onsubmit="event.preventDefault(); handleSubscribe('free');">
+          <label for="modal-email" style="display:none;">Email address</label>
+          <input type="email" id="modal-email" placeholder="your@email.com" required autocomplete="email" />
+          <button class="btn btn-green" type="submit">Subscribe</button>
+          <span class="switch-link">Want the full playbook? <a onclick="openModal('pro')">Go Pro</a></span>
+        </form>
+        <div class="success-msg" id="modal-success">
+          <div class="success-check">&#10003;</div>
+          <h3>You're in.</h3>
+          <p>Check your inbox.</p>
+        </div>`;
+    } else if (type === 'pro') {
+      html = `
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <div style="font-family:var(--mono);font-size:.6rem;font-weight:700;background:var(--yellow);color:#000;display:inline-block;padding:2px 10px;border-radius:4px;margin-bottom:12px;text-transform:uppercase;letter-spacing:.04em;">pro</div>
+        <h3>Go Pro &mdash; $12/mo</h3>
+        <p>Full playbooks, tools, case studies &amp; Q&amp;A.</p>
+        <form id="modal-form" onsubmit="event.preventDefault(); handleSubscribe('pro');">
+          <label for="modal-email" style="display:none;">Email address</label>
+          <input type="email" id="modal-email" placeholder="your@email.com" required autocomplete="email" />
+          <button class="btn btn-yellow" type="submit">Start Pro</button>
+          <span class="switch-link">Just want free? <a onclick="openModal('free')">Subscribe free</a></span>
+        </form>
+        <div class="success-msg" id="modal-success">
+          <div class="success-check">&#10003;</div>
+          <h3>Welcome to Pro.</h3>
+          <p>Check your inbox.</p>
+        </div>`;
+    } else if (type === 'signin') {
+      html = `
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <h3>Welcome back</h3>
+        <p>Enter your email to sign in.</p>
+        <form id="modal-form" onsubmit="event.preventDefault(); handleSignin();">
+          <label for="modal-email" style="display:none;">Email address</label>
+          <input type="email" id="modal-email" placeholder="your@email.com" required autocomplete="email" />
+          <button class="btn btn-green" type="submit">Sign in</button>
+          <span class="switch-link">New here? <a onclick="openModal('free')">Subscribe free</a></span>
+        </form>
+        <div class="success-msg" id="modal-success">
+          <div class="success-check">&#10003;</div>
+          <h3>Welcome back.</h3>
+          <p>You're signed in.</p>
+        </div>`;
+    }
+    box.innerHTML = html;
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('modal-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  // ── HELPERS ──
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 254;
+  }
+
+  // ── STRIPE INTEGRATION ──
+  async function handleSubscribe(plan) {
+    const email = document.getElementById('modal-email').value;
+    if (!isValidEmail(email)) {
+      document.getElementById('modal-email').style.borderColor = 'var(--red)';
+      return;
+    }
+    const btn = document.querySelector('#modal-form .btn');
+    const originalText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Processing...';
+    btn.style.opacity = '.6';
+    try {
+      if (plan === 'pro') {
+        const res = await fetch('/api/create-checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Checkout failed');
+        localStorage.setItem('userEmail', email);
+        window.location.href = data.url;
+        return;
+      } else {
+        const res = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Subscribe failed');
+        document.getElementById('modal-form').style.display = 'none';
+        document.getElementById('modal-success').classList.add('show');
+        localStorage.setItem('subscribed', 'free');
+        localStorage.setItem('userEmail', email);
+        updateNav('free');
+      }
+    } catch (err) {
+      console.error('Subscribe error:', err);
+      btn.disabled = false;
+      btn.textContent = originalText;
+      btn.style.opacity = '1';
+      let errEl = document.getElementById('modal-error');
+      if (!errEl) {
+        errEl = document.createElement('p');
+        errEl.id = 'modal-error';
+        errEl.style.cssText = 'color:var(--red);font-size:.78rem;margin-top:8px;';
+        btn.parentElement.appendChild(errEl);
+      }
+      errEl.textContent = 'Something went wrong. Try again.';
+    }
+  }
+
+  async function handleSignin() {
+    const email = document.getElementById('modal-email').value;
+    if (!isValidEmail(email)) {
+      document.getElementById('modal-email').style.borderColor = 'var(--red)';
+      return;
+    }
+    const btn = document.querySelector('#modal-form .btn');
+    const originalText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Checking...';
+    btn.style.opacity = '.6';
+    try {
+      const res = await fetch('/api/verify-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (!data.found) {
+        btn.disabled = false;
+        btn.textContent = originalText;
+        btn.style.opacity = '1';
+        let errEl = document.getElementById('modal-error');
+        if (!errEl) {
+          errEl = document.createElement('p');
+          errEl.id = 'modal-error';
+          errEl.style.cssText = 'color:var(--red);font-size:.78rem;margin-top:8px;';
+          btn.parentElement.appendChild(errEl);
+        }
+        errEl.textContent = 'No subscription found for this email.';
+        return;
+      }
+      const plan = data.plan || 'free';
+      localStorage.setItem('subscribed', plan);
+      localStorage.setItem('userEmail', email);
+      document.getElementById('modal-form').style.display = 'none';
+      document.getElementById('modal-success').classList.add('show');
+      if (plan === 'pro') {
+        document.getElementById('paywall').style.display = 'none';
+        document.getElementById('premium-content').style.display = 'block';
+      }
+      updateNav(plan);
+    } catch (err) {
+      console.error('Sign in error:', err);
+      btn.disabled = false;
+      btn.textContent = originalText;
+      btn.style.opacity = '1';
+    }
+  }
+
+  async function subscribeBanner() {
+    const email = document.getElementById('banner-email').value;
+    if (!isValidEmail(email)) return;
+    const btn = document.querySelector('.cta-form .btn');
+    btn.disabled = true;
+    btn.textContent = 'Processing...';
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      if (!res.ok) throw new Error('Failed');
+      document.getElementById('banner-email').style.display = 'none';
+      btn.style.display = 'none';
+      document.getElementById('banner-success').style.display = 'block';
+      localStorage.setItem('subscribed', localStorage.getItem('subscribed') || 'free');
+      localStorage.setItem('userEmail', email);
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = 'Subscribe';
+    }
+  }
+
+  function updateNav(plan) {
+    const actions = document.getElementById('nav-actions');
+    if (plan === 'pro') {
+      actions.innerHTML = `
+        <span style="font-family:var(--mono);font-size:.6rem;font-weight:700;background:var(--yellow);color:#000;padding:2px 8px;border-radius:4px;text-transform:uppercase;">pro</span>
+        <div class="author-avatar-lg">J</div>`;
+    } else {
+      actions.innerHTML = `
+        <button class="btn btn-yellow" onclick="openModal('pro')">Upgrade</button>
+        <div class="author-avatar-lg">J</div>`;
+    }
+  }
+
+  // ── RETURNING USER ──
+  (function() {
+    const plan = localStorage.getItem('subscribed');
+    if (plan) {
+      updateNav(plan);
+      if (plan === 'pro') {
+        document.getElementById('paywall').style.display = 'none';
+        document.getElementById('premium-content').style.display = 'block';
+      }
+    }
+  })();
+</script>
+
+</body>
+</html>
